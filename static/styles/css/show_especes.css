@@ -1,0 +1,351 @@
+body{
+    background-image: url("../../images/fonds_pages/fond_caverne.png");
+}
+
+@media (min-width: 765px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        background-size: cover;
+        background-attachment: fixed;
+        z-index: -1;
+
+        color: white;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+
+        width: 75%; 
+        padding: 20px;
+
+        border-radius: 5px; 
+        box-shadow: 1px 0px 5px 5px rgb(151, 151, 151);
+        background-color: rgba(70, 69, 69, 0.6);
+    }
+
+    .accroche {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        padding-bottom: 50px;
+    }
+
+    .line {
+        align-self: center;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(to right, transparent, black, transparent);
+    }
+
+    .select {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        gap: 5px;
+        overflow: hidden;
+
+        border-radius: 5px;
+        border: 5px ridge #303232a9;
+
+        padding: 10px;
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+
+        padding: 5px;
+
+        background-color: rgb(41, 41, 41);
+        font-family: "Bebas Neue";
+
+        transition: all 0.3s ease;
+    }
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card a {
+        display: flex;
+        justify-content: center;
+    }
+
+    .card img {
+        width: 250px;
+        height: 250px;
+
+        border-radius: 3px;
+        box-shadow: 0px 0px 5px 1px rgb(0, 0, 0);
+    }
+
+    .carac1 {
+        text-align: center;
+        font-size: 30px;
+
+        padding-bottom: 15px;
+        padding-top: 5px;    
+    }
+
+    .carac1 h4 {
+        opacity: 0.8;
+        font-size: 25px;
+        font-weight: 500;
+        font-style: italic;
+
+        margin: 3px;
+    }
+
+    .carac1 h3 {
+        margin: 0px;
+    }
+
+    .carac2 h3 {
+        text-align: start;
+        font-size: 20px;
+        font-weight: lighter;
+
+        margin: 2px;
+        padding-left: 5px;
+    }
+
+    h5 {
+        font-size: 35px;
+        font-weight: bolder;
+        font-family: "Saira Condensed";
+
+        padding-left: 45px;
+        margin-bottom: 10px;
+    }
+}
+
+
+@media (max-width: 765px) and (min-width: 360px) {
+    body {
+        display: flex;    
+        flex-direction: column;
+        align-items: center;
+
+        background-size: cover;
+        background-attachment: fixed;
+        z-index: -1;
+
+        color: white;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%; 
+
+        border-radius: 5px; 
+        box-shadow: 1px 0px 5px 5px rgb(151, 151, 151);
+        background-color: rgba(70, 69, 69, 0.8);
+    }
+
+    .accroche {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        padding-bottom: 50px;
+    }
+
+    .line {
+        align-self: center;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(to right, transparent, black, transparent);
+    }
+
+    .select {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+
+        padding: 5px;
+
+        background-color: rgb(41, 41, 41);
+        font-family: "Bebas Neue";
+
+        transition: all 0.3s ease;
+    }
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card a {
+        display: flex;
+        justify-content: center;
+    }
+
+    .card img {
+        width: 40vw;
+        height: 40vw;
+
+        border-radius: 3px;
+        box-shadow: 0px 0px 5px 1px rgb(0, 0, 0);
+    }
+
+    .carac1 {
+        text-align: center;
+        font-size: 30px;
+
+        padding-bottom: 15px;
+        padding-top: 5px;    
+    }
+
+    .carac1 h4 {
+        opacity: 0.8;
+        font-size: 25px;
+        font-weight: 500;
+        font-style: italic;
+
+        margin: 3px;
+    }
+
+    .carac1 h3 {
+        margin: 0px;
+    }
+
+    .carac2 h3 {
+        display: none;
+    }
+
+    h5 {
+        font-size: 35px;
+        font-weight: bolder;
+        font-family: "Saira Condensed";
+
+        padding-left: 45px;
+        margin-bottom: 10px;
+    }
+}
+
+
+@media (max-width: 360px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 10px
+    }
+
+    body {
+        display: flex;    
+        flex-direction: column;
+        align-items: center;
+
+        background-size: cover;
+        background-attachment: fixed;
+        z-index: -1;
+
+        color: white;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+
+        width: 100%; 
+
+        border-radius: 5px; 
+        box-shadow: 1px 0px 5px 5px rgb(151, 151, 151);
+        background-color: rgba(70, 69, 69, 0.8);
+    }
+
+    .accroche {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+
+        padding-bottom: 50px;
+    }
+
+    .line {
+        align-self: center;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(to right, transparent, black, transparent);
+    }
+
+    .select {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .select button {
+        display: none;
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+
+        background-color: rgb(41, 41, 41);
+        font-family: "Bebas Neue";
+
+        transition: all 0.3s ease;
+    }
+    .card:hover {
+        transform: scale(1.05);
+    }
+
+    .card a {
+        display: flex;
+        justify-content: center;
+    }
+
+    .card img {
+        width: 38vw;
+        height: 38vw;
+
+        border-radius: 3px;
+        box-shadow: 0px 0px 5px 1px rgb(0, 0, 0);
+    }
+
+    .carac1 {
+        display: none;
+    }
+
+    .carac1 h4 {
+        opacity: 0.8;
+        font-size: 25px;
+        font-weight: 500;
+        font-style: italic;
+
+        margin: 3px;
+    }
+
+    .carac1 h3 {
+        margin: 0px;
+    }
+
+    .carac2 h3 {
+        display: none;
+    }
+
+    h5 {
+        font-size: 20px;
+        text-align: center;
+        font-weight: bolder;
+        font-family: "Saira Condensed";
+
+        margin-bottom: 10px;
+    }
+}
