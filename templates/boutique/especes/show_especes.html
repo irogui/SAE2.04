@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/styles/css/show_especes.css">
+{% endblock %}
+
+
+{% block main %}
+
+    <div class="accroche">
+        <h1>Toutes les créatures disponibles...<h1>
+            
+        <a class="btn_add" href="/boutique/espece/add">Ajouter</a>
+    </div>
+
+    <div class="select">
+
+        {% for espece in especes %}
+
+        <!-- Créature -->
+        <div class="card {{ espece.biome_espece }}">
+            <!-- Image créature -->
+            <a href="#" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/static/images/fonds_cartes/{{ espece.biome_espece }}.png');
+                               background-size: cover;">
+
+                <img src="/static/images/especes/{{ espece.nom_espece }}.png" alt="{{ espece.nom_espece }} Image">
+            </a>
+
+            <!-- Caractéristiques créatures -->
+            <div>
+
+                <div class="carac1">
+                    <h4>{{ espece.nom_espece }}</h4>
+                </div>
+
+                <div class="carac2">
+                    <h3>Prix: {{ espece.prix_espece }}€</h3>
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

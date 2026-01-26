@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>E-COMMERCE</title>
+
+    <!-- importation icone -->
+    <link>
+
+    <!-- importation CSS général -->
+    <link rel="stylesheet" href="/static/styles/css/style_gen.css">
+
+    <!-- Importation CSS boutique -->
+    {% block css %}<link rel="stylesheet" href="/static/styles/css/accueil.css">{% endblock %}
+</head>
+
+<body>
+    <header>
+        <nav class="nav_pages">
+            <a href="/boutique">Boutique</a>
+        </nav>
+
+        <nav class="nav_account">
+            <a href="#">Se connecter</a>
+            <a href="#">Créer un compte</a>
+        </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <main>
+        {% block main %}
+        <div class="accroche">
+            <h1> Bienvenue sur E-COMMERCE !<h1>
+
+            <div class="line"></div>
+        </div>
+        {% endblock %}
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+{ extends "layout.html" }
+
+{ block main }
+<div class="accroche">
+    <h1>Ajout d'une créature...<h1>
+    <div class="line"></div>
+</div>
+
+<form>
+  <div class="form-group">
+    <label for="nom_espece">Nom</label>
+
+    <input type="text" class="form-control" id="nom_espece" placeholder="Entrez le nom exact de la créature...">
+    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{ endblock }
