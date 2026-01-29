@@ -1,6 +1,3 @@
-/* ===========================
-   NETTOYAGE DES TABLES
-   =========================== */
 DROP TABLE IF EXISTS ligne_panier;
 DROP TABLE IF EXISTS ligne_commande;
 DROP TABLE IF EXISTS coloration;
@@ -13,10 +10,6 @@ DROP TABLE IF EXISTS categorie_animal;
 DROP TABLE IF EXISTS espece_animal;
 
 
-/* ===========================
-   CREATION DES TABLES
-   =========================== */
-
 CREATE TABLE espece_animal(
     id_espece_animal INT AUTO_INCREMENT,
     nom_espece VARCHAR(100),
@@ -24,6 +17,7 @@ CREATE TABLE espece_animal(
     poids_moyen DECIMAL(15,2),
     temperament VARCHAR(50),
     taille DECIMAL(15,2),
+
     longueur_vie INT,
     habitat VARCHAR(100),
     regime_alimentaire VARCHAR(50),
@@ -105,10 +99,6 @@ CREATE TABLE ligne_panier(
     FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
 );
 
-
-/* ===========================
-   INSERT DES DONNEES
-   =========================== */
 
 INSERT INTO espece_animal (nom_espece, prix, poids_moyen, temperament, taille, longueur_vie, habitat, regime_alimentaire, sociable, description, photo) VALUES
 ('Poisson rouge', 5.00, 0.05, 'Paisible', 0.10, 5, 'Aquarium', 'Omnivore', true, 'Petit poisson d’eau douce très populaire en aquarium.', 'poisson_rouge.png'),
