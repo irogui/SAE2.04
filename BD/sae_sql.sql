@@ -105,5 +105,5 @@ VALUES
 ('Mesopithecus', 900.00, 6.00, 'Sociable', 0.50, 15, 'Forêts / montagnes', 'Omnivore', true, 'Petit singe préhistorique.', 'mesopithecus.png'),
 ('Eurypterid', 5000.00, 5.00, 'Semi-agressif', 1.20, 5, 'Eaux peu profondes', 'Carnivore', false, 'Eurypteride, arthropode marin préhistorique.', 'eurypterid.png'),
 ('Dire Bear', 120000.00, 600.00, 'Agressif', 2.80, 25, 'Forêts / montagnes froides', 'Omnivore', false, 'Ours géant du Pléistocène. ', 'dire_bear.png'),
-('Equus', 15000.00, 400.00, 'Docile', 1.60, 25, 'Prairies / steppes', 'Herbivore', true,'Genre regroupant les chevaux, ânes et zèbres. Apparue il y a ~4 millions d’années. Animal rapide, social et endurant, largement domestiqué par l’homme.', 'equus.png'
+('Cheval', 15000.00, 400.00, 'Docile', 1.60, 25, 'Prairies / steppes', 'Herbivore', true,'Genre regroupant les chevaux, ânes et zèbres. Apparue il y a ~4 millions d’années. Animal rapide, social et endurant, largement domestiqué par l’homme.', 'equus.png'
 );
