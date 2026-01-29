@@ -123,7 +123,6 @@ INSERT INTO espece_animal (nom_espece, prix, poids_moyen, temperament, taille, l
 ('Smilodon', 250000.00, 230.00, 'Agressif', 1.50, 20, 'Plaines / forêts', 'Carnivore', false, 'Grand félidé à dents de sabre.', 'sabertooth.png'),
 ('Thylacoléo', 300000.00, 120.00, 'Solitaire', 1.30, 18, 'Forêts / savanes', 'Carnivore', false, 'Carnivore marsupial puissant.', 'thylacoleo.png'),
 ('Titanoboa', 1800000.00, 1400.00, 'Agressif', 15.00, 25, 'Forêts humides', 'Carnivore', false, 'Serpent géant du Paléocène mesurant jusqu''à ~15 m.', 'titanoboa.png'),
-<<<<<<< HEAD
 ('Mesopithèque', 900.00, 6.00, 'Sociable', 0.50, 15, 'Forêts / montagnes', 'Omnivore', true, 'Petit singe préhistorique.', 'mesopithecus.png'),
 ('Euryptéride', 5000.00, 5.00, 'Semi-agressif', 1.20, 5, 'Eaux peu profondes', 'Carnivore', false, 'Eurypteride, arthropode marin préhistorique.', 'eurypterid.png'),
 ('Ours', 120000.00, 600.00, 'Agressif', 2.80, 25, 'Forêts / montagnes froides', 'Omnivore', false, 'Ours géant du Pléistocène. ', 'dire_bear.png'),
@@ -133,10 +132,3 @@ INSERT INTO categorie_animal(nom_categorie) VALUES
 ('Terrestre'),
 ('Aérien'),
 ('Marin');
-=======
-('Mesopithecus', 900.00, 6.00, 'Sociable', 0.50, 15, 'Forêts / montagnes', 'Omnivore', true, 'Petit singe préhistorique.', 'mesopithecus.png'),
-('Eurypterid', 5000.00, 5.00, 'Semi-agressif', 1.20, 5, 'Eaux peu profondes', 'Carnivore', false, 'Eurypteride, arthropode marin préhistorique.', 'eurypterid.png'),
-('Dire Bear', 120000.00, 600.00, 'Agressif', 2.80, 25, 'Forêts / montagnes froides', 'Omnivore', false, 'Ours géant du Pléistocène. ', 'dire_bear.png'),
-('Cheval', 15000.00, 400.00, 'Docile', 1.60, 25, 'Prairies / steppes', 'Herbivore', true,'Genre regroupant les chevaux, ânes et zèbres. Apparue il y a ~4 millions d’années. Animal rapide, social et endurant, largement domestiqué par l’homme.', 'equus.png'
-);
->>>>>>> 6da60ca70d85388e3c28dbf3cb2c2e0091c6eeee
