@@ -133,10 +133,10 @@ INSERT INTO couleur (nom_couleur) VALUES
 INSERT INTO etat (libelle_etat) VALUES
 ('En attente'), ('Payée'), ('Expédiée'), ('Livrée'), ('Annulée');
 
-INSERT INTO utilisateur (login, email, nom_utilisateur, password, role) VALUES
-('admin', 'admin@animalerie.fr', 'Administrateur', 'admin123', 'ADMIN'),
-('client1', 'client1@mail.fr', 'Jean Dupont', 'client123', 'CLIENT'),
-('client2', 'client2@mail.fr', 'Marie Martin', 'client123', 'CLIENT');
+INSERT INTO utilisateur (login, email, password, role) VALUES
+('admin', 'admin@', 'scrypt:32768:8:1$Ml2pV0qHPO9MleKy$a74be53606579df68da2f22ac167ab3dc8ad3bd34df1383634857442a4069a0994bc81bf771b4c8060174dd4ec7676445a33408e10dfacdeb39fffb6e230d7dd', 'ROLE_admin'),
+('client1', 'client1@', 'scrypt:32768:8:1$jiguhX3syLyTCCNi$613fc1ef298afc2f5e5e978e0cc7a0f96c17615695348b276dc4cf1e4147711cb2af27ae595eafb560a9554962e64a1c71af8d2a85e7c53f78bf848aec7a7618', 'ROLE_client'),
+('client2', 'client2@', 'scrypt:32768:8:1$c1vKyox517ZmFLC5$615b4fce3a1e31cb711077be5ab2f55b792d2d868d6fc51e0767b4bdfbafb08bf1875d26038786be3cb55e9f5bb5514e2f9b10d2b314a17a25a362ba1ac32902', 'ROLE_client');
 
 INSERT INTO commande (date_achat, etat_id) VALUES
 ('2024-01-10', 2),
