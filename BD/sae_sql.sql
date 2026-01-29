@@ -1,4 +1,6 @@
-
+/* ===========================
+   NETTOYAGE DES TABLES
+   =========================== */
 DROP TABLE IF EXISTS ligne_panier;
 DROP TABLE IF EXISTS ligne_commande;
 DROP TABLE IF EXISTS coloration;
@@ -11,7 +13,9 @@ DROP TABLE IF EXISTS categorie_animal;
 DROP TABLE IF EXISTS espece_animal;
 
 
-
+/* ===========================
+   CREATION DES TABLES
+   =========================== */
 
 CREATE TABLE espece_animal(
     id_espece_animal INT AUTO_INCREMENT,
@@ -102,7 +106,9 @@ CREATE TABLE ligne_panier(
 );
 
 
-
+/* ===========================
+   INSERT DES DONNEES
+   =========================== */
 
 INSERT INTO espece_animal (nom_espece, prix, poids_moyen, temperament, taille, longueur_vie, habitat, regime_alimentaire, sociable, description, photo) VALUES
 ('Poisson rouge', 5.00, 0.05, 'Paisible', 0.10, 5, 'Aquarium', 'Omnivore', true, 'Petit poisson d’eau douce très populaire en aquarium.', 'poisson_rouge.png'),
@@ -134,3 +140,36 @@ INSERT INTO categorie_animal (nom_categorie) VALUES
 INSERT INTO couleur (nom_couleur) VALUES
 ('Rouge'), ('Blanc'), ('Noir'), ('Jaune'), ('Vert'), ('Bleu'), ('Orange'), ('Marron');
 
+INSERT INTO etat (libelle_etat) VALUES
+('En attente'), ('Payée'), ('Expédiée'), ('Livrée'), ('Annulée');
+
+INSERT INTO utilisateur (login, email, nom_utilisateur, password, role) VALUES
+('admin', 'admin@animalerie.fr', 'Administrateur', 'admin123', 'ADMIN'),
+('client1', 'client1@mail.fr', 'Jean Dupont', 'client123', 'CLIENT'),
+('client2', 'client2@mail.fr', 'Marie Martin', 'client123', 'CLIENT');
+
+INSERT INTO commande (date_achat, etat_id) VALUES
+('2024-01-10', 2),
+('2024-01-15', 3),
+('2024-01-20', 1);
+
+INSERT INTO classification (espece_animal_id, categorie_animal_id) VALUES
+(1,3),(2,3),(3,3),(9,3),(13,3),(17,3),(18,3),
+(4,1),(5,1),(6,1),(16,1),
+(7,2),(8,2),(15,2),
+(10,4),(14,4),
+(11,5),(12,5);
+
+INSERT INTO coloration (espece_animal_id, couleur_id) VALUES
+(1,1),(1,7),(2,6),(3,1),(4,8),(6,2),(7,4),(8,6),(11,8),(12,3);
+
+INSERT INTO ligne_commande (espece_animal_id, commande_id, prix, quantite) VALUES
+(1,1,5.00,2),
+(4,1,20.00,1),
+(7,2,30.00,1),
+(11,3,50.00,1);
+
+INSERT INTO ligne_panier (espece_animal_id, utilisateur_id, quantite, date_ajout) VALUES
+(3,2,1,'2024-01-25'),
+(6,2,1,'2024-01-25'),
+(8,3,1,'2024-01-26');
