@@ -17,7 +17,7 @@ CREATE TABLE espece_animal(
     poids_moyen DECIMAL(15,2),
     temperament VARCHAR(50),
     taille DECIMAL(15,2),
-
+    stock INT,
     longueur_vie INT,
     habitat VARCHAR(100),
     regime_alimentaire VARCHAR(50),
@@ -100,25 +100,25 @@ CREATE TABLE ligne_panier(
 );
 
 
-INSERT INTO espece_animal (nom_espece, prix, poids_moyen, temperament, taille, longueur_vie, habitat, regime_alimentaire, sociable, description, photo) VALUES
-('Poisson rouge', 5.00, 0.05, 'Paisible', 0.10, 5, 'Aquarium', 'Omnivore', true, 'Petit poisson d’eau douce très populaire en aquarium.', 'poisson_rouge.png'),
-('Guppy', 3.00, 0.01, 'Actif', 0.04, 2, 'Aquarium', 'Omnivore', true, 'Poisson tropical très coloré et facile à élever.', 'guppy.png'),
-('Betta', 8.00, 0.03, 'Territorial', 0.06, 3, 'Aquarium', 'Carnivore', false, 'Poisson combattant aux couleurs vives.', 'betta.png'),
-('Hamster', 20.00, 0.15, 'Curieux', 0.12, 3, 'Cage', 'Omnivore', true, 'Petit rongeur nocturne.', 'hamster.png'),
-('Cochon d’Inde', 25.00, 0.80, 'Docile', 0.25, 5, 'Cage', 'Herbivore', true, 'Rongeur sociable.', 'cochon_indie.png'),
-('Lapin', 40.00, 2.50, 'Calme', 0.40, 8, 'Clapier / maison', 'Herbivore', true, 'Mammifère herbivore domestique.', 'lapin.png'),
-('Canari', 30.00, 0.02, 'Chantant', 0.15, 10, 'Cage', 'Granivore', true, 'Oiseau chanteur.', 'canari.png'),
-('Perroquet', 150.00, 0.90, 'Intelligent', 0.35, 50, 'Cage / volière', 'Omnivore', true, 'Oiseau coloré et bavard.', 'perroquet.png'),
-('Tortue de Floride', 100.00, 1.50, 'Calme', 0.25, 30, 'Aquarium / bassin', 'Omnivore', true, 'Tortue aquatique.', 'tortue_floride.png'),
-('Axolotl', 60.00, 0.15, 'Tranquille', 0.20, 15, 'Aquarium', 'Carnivore', true, 'Amphibien aquatique.', 'axolotl.png'),
-('Gecko léopard', 50.00, 0.06, 'Sociable', 0.20, 15, 'Terrarium', 'Carnivore', true, 'Petit lézard nocturne.', 'gecko_leopard.png'),
-('Serpent des blés', 80.00, 0.50, 'Docile', 1.20, 20, 'Terrarium', 'Carnivore', true, 'Serpent non venimeux.', 'serpent_ble.png'),
-('Poisson combattant', 7.00, 0.02, 'Agressif', 0.06, 3, 'Aquarium', 'Carnivore', false, 'Poisson solitaire.', 'poisson_combattant.png'),
-('Crapaud africain', 15.00, 0.20, 'Calme', 0.12, 10, 'Terrarium / aquarium', 'Omnivore', true, 'Amphibien robuste.', 'crapaud_africain.png'),
-('Calopsitte', 90.00, 0.10, 'Sociable', 0.30, 20, 'Cage / volière', 'Granivore', true, 'Oiseau australien.', 'calopsitte.png'),
-('Rat domestique', 12.00, 0.30, 'Intelligent', 0.25, 3, 'Cage', 'Omnivore', true, 'Rongeur très sociable.', 'rat.png'),
-('Poisson néon', 2.50, 0.01, 'Paisible', 0.03, 3, 'Aquarium', 'Omnivore', true, 'Petit poisson coloré.', 'neon.png'),
-('Perche soleil', 5.00, 0.10, 'Calme', 0.10, 6, 'Aquarium', 'Omnivore', true, 'Poisson d’eau douce.', 'perche_soleil.png');
+INSERT INTO espece_animal (nom_espece, prix, poids_moyen, temperament, taille, stock, longueur_vie, habitat, regime_alimentaire, sociable, description, photo) VALUES
+('Poisson rouge', 5.00, 0.05, 'Paisible', 0.10, 5, 5, 'Aquarium', 'Omnivore', true, 'Petit poisson d’eau douce très populaire en aquarium.', 'poisson_rouge.png'),
+('Guppy', 3.00, 0.01, 'Actif', 0.04, 6, 2, 'Aquarium', 'Omnivore', true, 'Poisson tropical très coloré et facile à élever.', 'guppy.png'),
+('Betta', 8.00, 0.03, 'Territorial', 0.06, 4, 3, 'Aquarium', 'Carnivore', false, 'Poisson combattant aux couleurs vives.', 'betta.png'),
+('Hamster', 20.00, 0.15, 'Curieux', 0.12, 3, 3, 'Cage', 'Omnivore', true, 'Petit rongeur nocturne.', 'hamster.png'),
+('Cochon d’Inde', 25.00, 0.80, 'Docile', 0.25, 2, 5, 'Cage', 'Herbivore', true, 'Rongeur sociable.', 'cochon_indie.png'),
+('Lapin', 40.00, 2.50, 'Calme', 0.40, 5, 8, 'Clapier / maison', 'Herbivore', true, 'Mammifère herbivore domestique.', 'lapin.png'),
+('Canari', 30.00, 0.02, 'Chantant', 0.15, 5, 10, 'Cage', 'Granivore', true, 'Oiseau chanteur.', 'canari.png'),
+('Perroquet', 150.00, 0.90, 'Intelligent', 0.35, 3, 50, 'Cage / volière', 'Omnivore', true, 'Oiseau coloré et bavard.', 'perroquet.png'),
+('Tortue de Floride', 100.00, 1.50, 'Calme', 0.25, 2, 30, 'Aquarium / bassin', 'Omnivore', true, 'Tortue aquatique.', 'tortue_floride.png'),
+('Axolotl', 60.00, 0.15, 'Tranquille', 0.20, 6, 15, 'Aquarium', 'Carnivore', true, 'Amphibien aquatique.', 'axolotl.png'),
+('Gecko léopard', 50.00, 0.06, 'Sociable', 0.20, 3, 15, 'Terrarium', 'Carnivore', true, 'Petit lézard nocturne.', 'gecko_leopard.png'),
+('Serpent des blés', 80.00, 0.50, 'Docile', 1.20, 2, 20, 'Terrarium', 'Carnivore', true, 'Serpent non venimeux.', 'serpent_ble.png'),
+('Poisson combattant', 7.00, 0.02, 'Agressif', 0.06, 8, 3, 'Aquarium', 'Carnivore', false, 'Poisson solitaire.', 'poisson_combattant.png'),
+('Crapaud africain', 15.00, 0.20, 'Calme', 0.12, 2, 10, 'Terrarium / aquarium', 'Omnivore', true, 'Amphibien robuste.', 'crapaud_africain.png'),
+('Calopsitte', 90.00, 0.10, 'Sociable', 0.30, 2, 20, 'Cage / volière', 'Granivore', true, 'Oiseau australien.', 'calopsitte.png'),
+('Rat domestique', 12.00, 0.30, 'Intelligent', 0.25, 6, 3, 'Cage', 'Omnivore', true, 'Rongeur très sociable.', 'rat.png'),
+('Poisson néon', 2.50, 0.01, 'Paisible', 0.03, 10, 3, 'Aquarium', 'Omnivore', true, 'Petit poisson coloré.', 'neon.png'),
+('Perche soleil', 5.00, 0.10, 'Calme', 0.10, 6, 6, 'Aquarium', 'Omnivore', true, 'Poisson d’eau douce.', 'perche_soleil.png');
 
 INSERT INTO categorie_animal (nom_categorie) VALUES
 ('Animal terrestre'),
