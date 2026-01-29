@@ -11,16 +11,7 @@ fixtures_load = Blueprint('fixtures_load', __name__,
 @fixtures_load.route('/base/init')
 def fct_fixtures_load():
     mycursor = get_db().cursor()
-    sql='''DROP TABLE IF EXISTS ligne_panier;
-            DROP TABLE IF EXISTS ligne_commande;
-            DROP TABLE IF EXISTS coloration;
-            DROP TABLE IF EXISTS classification;
-            DROP TABLE IF EXISTS commande;
-            DROP TABLE IF EXISTS etat;
-            DROP TABLE IF EXISTS utilisateur;
-            DROP TABLE IF EXISTS couleur;
-            DROP TABLE IF EXISTS categorie_animal;
-            DROP TABLE IF EXISTS espece_animal;
+    sql='''DROP TABLE IF EXISTS ligne_panier, ligne_commande, coloration, classification, commande, etat, utilisateur, couleur, categorie_animal, espece_animal;
 '''
 
     mycursor.execute(sql)
@@ -132,7 +123,7 @@ INSERT INTO couleur (nom_couleur) VALUES
        libelle_etat VARCHAR(100),
     
        PRIMARY KEY(id_etat)
-    ); DEFAULT CHARSET=utf8;  
+    ) DEFAULT CHARSET=utf8;  
      '''
     mycursor.execute(sql)
 #    sql = '''
@@ -148,7 +139,7 @@ INSERT INTO couleur (nom_couleur) VALUES
     
        PRIMARY KEY(id_commande),
        FOREIGN KEY(etat_id) REFERENCES etat(id_etat)
-    );
+    ) DEFAULT CHARSET=utf8;
           '''
     mycursor.execute(sql)
 #    sql = '''
@@ -164,7 +155,7 @@ INSERT INTO couleur (nom_couleur) VALUES
        PRIMARY KEY(espece_animal_id, categorie_animal_id),
        FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
        FOREIGN KEY(categorie_animal_id) REFERENCES categorie_animal(id_categorie_animal)
-    );
+    ) DEFAULT CHARSET=utf8;
           '''
     mycursor.execute(sql)
 #    sql = '''
@@ -180,7 +171,7 @@ INSERT INTO couleur (nom_couleur) VALUES
        PRIMARY KEY(espece_animal_id, couleur_id),
        FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
        FOREIGN KEY(couleur_id) REFERENCES couleur(id_couleur)
-    );
+    ) DEFAULT CHARSET=utf8;
           '''
     mycursor.execute(sql)
 #    sql = '''
@@ -198,7 +189,7 @@ INSERT INTO couleur (nom_couleur) VALUES
        PRIMARY KEY(espece_animal_id, commande_id),
        FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
        FOREIGN KEY(commande_id) REFERENCES commande(id_commande)
-    );
+    ) DEFAULT CHARSET=utf8;
          '''
     mycursor.execute(sql)
 #    sql = '''
