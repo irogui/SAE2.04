@@ -112,10 +112,13 @@ INSERT INTO couleur (nom_couleur) VALUES
     )  DEFAULT CHARSET=utf8;  
      '''
     mycursor.execute(sql)
-#    sql = '''
-#    INSERT INTO utilisateur ()
-#         '''
-#    mycursor.execute(sql)
+    sql = '''
+    INSERT INTO utilisateur (login, email, password, role) VALUES
+        ('admin', 'admin@', 'scrypt:32768:8:1$Ml2pV0qHPO9MleKy$a74be53606579df68da2f22ac167ab3dc8ad3bd34df1383634857442a4069a0994bc81bf771b4c8060174dd4ec7676445a33408e10dfacdeb39fffb6e230d7dd', 'ROLE_admin'),
+        ('client1', 'client1@', 'scrypt:32768:8:1$jiguhX3syLyTCCNi$613fc1ef298afc2f5e5e978e0cc7a0f96c17615695348b276dc4cf1e4147711cb2af27ae595eafb560a9554962e64a1c71af8d2a85e7c53f78bf848aec7a7618', 'ROLE_client'),
+        ('client2', 'client2@', 'scrypt:32768:8:1$c1vKyox517ZmFLC5$615b4fce3a1e31cb711077be5ab2f55b792d2d868d6fc51e0767b4bdfbafb08bf1875d26038786be3cb55e9f5bb5514e2f9b10d2b314a17a25a362ba1ac32902', 'ROLE_client');
+         '''
+    mycursor.execute(sql)
 
     sql = ''' 
     CREATE TABLE etat(
@@ -126,10 +129,11 @@ INSERT INTO couleur (nom_couleur) VALUES
     ) DEFAULT CHARSET=utf8;  
      '''
     mycursor.execute(sql)
-#    sql = '''
-#    INSERT INTO etat()
-#                 '''
-#    mycursor.execute(sql)
+    sql = '''
+    INSERT INTO etat (libelle_etat) VALUES
+     ('En attente'), ('Payée'), ('Expédiée'), ('Livrée'), ('Annulée');
+                 '''
+    mycursor.execute(sql)
 
     sql = '''
     CREATE TABLE commande(
@@ -142,10 +146,13 @@ INSERT INTO couleur (nom_couleur) VALUES
     ) DEFAULT CHARSET=utf8;
           '''
     mycursor.execute(sql)
-#    sql = '''
-#          INSERT INTO commande()
-#          '''
-#    mycursor.execute(sql)
+    sql = '''
+    INSERT INTO commande (date_achat, etat_id) VALUES
+        ('2024-01-10', 2),
+        ('2024-01-15', 3),
+        ('2024-01-20', 1);
+          '''
+    mycursor.execute(sql)
 
     sql = '''
     CREATE TABLE classification(
@@ -158,10 +165,15 @@ INSERT INTO couleur (nom_couleur) VALUES
     ) DEFAULT CHARSET=utf8;
           '''
     mycursor.execute(sql)
-#    sql = '''
-#          INSERT INTO classification()
-#          '''
-#    mycursor.execute(sql)
+    sql = '''
+    INSERT INTO classification (espece_animal_id, categorie_animal_id) VALUES
+        (1,3),(2,3),(3,3),(9,3),(13,3),(17,3),(18,3),
+        (4,1),(5,1),(6,1),(16,1),
+        (7,2),(8,2),(15,2),
+        (10,4),(14,4),
+        (11,5),(12,5);
+          '''
+    mycursor.execute(sql)
 
     sql = '''
     CREATE TABLE coloration(
@@ -174,10 +186,11 @@ INSERT INTO couleur (nom_couleur) VALUES
     ) DEFAULT CHARSET=utf8;
           '''
     mycursor.execute(sql)
-#    sql = '''
-#          INSERT INTO coloration()
-#          '''
-#    mycursor.execute(sql)
+    sql = '''
+    INSERT INTO coloration (espece_animal_id, couleur_id) VALUES
+        (1,1),(1,7),(2,6),(3,1),(4,8),(6,2),(7,4),(8,6),(11,8),(12,3);
+          '''
+    mycursor.execute(sql)
 
     sql = ''' 
     CREATE TABLE ligne_commande(
@@ -192,10 +205,14 @@ INSERT INTO couleur (nom_couleur) VALUES
     ) DEFAULT CHARSET=utf8;
          '''
     mycursor.execute(sql)
-#    sql = '''
-#    INSERT INTO ligne_commande()
-#          '''
-#    mycursor.execute(sql)
+    sql = '''
+    INSERT INTO ligne_commande (espece_animal_id, commande_id, prix, quantite) VALUES
+        (1,1,5.00,2),
+        (4,1,20.00,1),
+        (7,2,30.00,1),
+        (11,3,50.00,1);
+          '''
+    mycursor.execute(sql)
 
 
     sql = ''' 
@@ -210,6 +227,14 @@ INSERT INTO couleur (nom_couleur) VALUES
        FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
     );  
          '''
+    mycursor.execute(sql)
+
+    sql = '''
+    INSERT INTO ligne_panier(espece_animal_id, utilisateur_id, quantite, date_ajout) VALUES
+        (3, 2, 1, '2024-01-25'),
+        (6, 2, 1, '2024-01-25'),
+        (8, 3, 1, '2024-01-26');
+          '''
     mycursor.execute(sql)
 
 
