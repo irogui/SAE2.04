@@ -121,11 +121,11 @@ INSERT INTO espece_animal (nom_espece, prix, poids_moyen, temperament, taille, s
 ('Perche soleil', 5.00, 0.10, 'Calme', 0.10, 6, 6, 'Aquarium', 'Omnivore', true, 'Poisson d’eau douce.', 'perche_soleil.png');
 
 INSERT INTO categorie_animal (nom_categorie) VALUES
-('Animal terrestre'),
-('Animal aérien'),
-('Animal aquatique'),
-('Animal amphibie'),
-('Animal reptile');
+('Terrestre'),
+('Aérien'),
+('Aquatique'),
+('Amphibien'),
+('Reptile');
 
 INSERT INTO couleur (nom_couleur) VALUES
 ('Rouge'), ('Blanc'), ('Noir'), ('Jaune'), ('Vert'), ('Bleu'), ('Orange'), ('Marron');
