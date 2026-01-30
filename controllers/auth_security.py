@@ -7,8 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from connexion_db import get_db
 
-auth_security = Blueprint('auth_security', __name__,
-                        template_folder='templates')
+auth_security = Blueprint('auth_security', __name__, template_folder='templates')
 
 @auth_security.route('/login')
 def auth_login():
@@ -20,9 +19,9 @@ def auth_login_post():
     mycursor = get_db().cursor()
     login = request.form.get('login')
     password = request.form.get('password')
-    tuple_select = (login)
-    sql = " requete_auth_security_1 "
-    retour = mycursor.execute(sql, (login))
+    tuple_select = login
+    sql = " SELECT id_utilisateur, login, password, role FROM utilisateur WHERE login = %s; "
+    mycursor.execute(sql, login)
     user = mycursor.fetchone()
     if user:
         mdp_ok = check_password_hash(user['password'], password)
@@ -49,35 +48,44 @@ def auth_signup():
 
 @auth_security.route('/signup', methods=['POST'])
 def auth_signup_post():
-    mycursor = get_db().cursor()
     email = request.form.get('email')
     login = request.form.get('login')
     password = request.form.get('password')
+
+    mycursor = get_db().cursor()
+
     tuple_select = (login, email)
-    sql = " requete_auth_security_2  "
-    retour = mycursor.execute(sql, tuple_select)
+    sql = " SELECT login, email FROM utilisateur WHERE login = %s OR email = %s; "
+    mycursor.execute(sql, tuple_select)
     user = mycursor.fetchone()
+
     if user:
-        flash(u'votre adresse Email ou  votre Login existe déjà', 'alert-warning')
+        flash(f"Votre adresse Email ou votre Login existe déjà", 'alert-warning')
         return redirect('/signup')
 
     # ajouter un nouveau user
-    password = generate_password_hash(password, method='sha256')
+    password = generate_password_hash(password, method='scrypt')
+
     tuple_insert = (login, email, password, 'ROLE_client')
-    sql = """  requete_auth_security_3  """
+    sql = """ INSERT INTO utilisateur (login, email, password, role) VALUES (%s, %s, %s, %s); """
     mycursor.execute(sql, tuple_insert)
+
     get_db().commit()
-    sql = """  requete_auth_security_4  """
+
+    sql = """ SELECT last_insert_id() AS last_insert_id; """
     mycursor.execute(sql)
     info_last_id = mycursor.fetchone()
     id_user = info_last_id['last_insert_id']
     print('last_insert_id', id_user)
+
     session.pop('login', None)
     session.pop('role', None)
     session.pop('id_user', None)
+
     session['login'] = login
     session['role'] = 'ROLE_client'
     session['id_user'] = id_user
+
     return redirect('/client/article/show')
 
 
@@ -91,4 +99,3 @@ def auth_logout():
 @auth_security.route('/forget-password', methods=['GET'])
 def forget_password():
     return render_template('auth/forget_password.html')
-
