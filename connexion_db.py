@@ -12,7 +12,7 @@ def get_db():
         db = g._database = pymysql.connect(
             host=os.environ.get('HOST'),
             # host="serveurmysql",
-            user=os.environ.get("osamil"),
+            user=os.environ.get("USER"),
             password=os.environ.get("PASSWORD"),
             database=os.environ.get("DATABASE"),
             charset='utf8mb4',

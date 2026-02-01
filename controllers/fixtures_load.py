@@ -11,229 +11,297 @@ fixtures_load = Blueprint('fixtures_load', __name__,
 @fixtures_load.route('/base/init')
 def fct_fixtures_load():
     mycursor = get_db().cursor()
-    sql='''DROP TABLE IF EXISTS ligne_panier, ligne_commande, coloration, classification, commande, etat, utilisateur, couleur, categorie_animal, espece_animal;
+    sql='''DROP TABLE IF EXISTS ligne_panier, ligne_commande, variante, classification, commande, etat, utilisateur, couleur, categorie_animal, espece_animal;
 '''
 
     mycursor.execute(sql)
     sql='''
     CREATE TABLE espece_animal(
-       id_espece_animal INT AUTO_INCREMENT,
-       nom_espece VARCHAR(100),
-       prix DECIMAL(15,2),
-       poids_moyen DECIMAL(15,2),
-       temperament VARCHAR(50),
-       taille DECIMAL(15,2),
-       longueur_vie INT,
-       habitat VARCHAR(100),
-       regime_alimentaire VARCHAR(50),
-       sociable BOOLEAN,
-       description VARCHAR(8000),
-       photo VARCHAR(255),
-    
-       PRIMARY KEY(id_espece_animal)
-    ) DEFAULT CHARSET=utf8;
+    id_espece_animal INT AUTO_INCREMENT,
+    nom_espece VARCHAR(100),
+    prix DECIMAL(15,2),
+    poids_moyen DECIMAL(15,2),
+    temperament VARCHAR(50),
+    taille DECIMAL(15,2),
+    longueur_vie INT,
+    habitat VARCHAR(100),
+    regime_alimentaire VARCHAR(50),
+    sociable BOOLEAN,
+    description VARCHAR(8000),
+    image VARCHAR(255),
+
+    PRIMARY KEY(id_espece_animal)
+);
+
     '''
     mycursor.execute(sql)
     sql=''' 
-INSERT INTO espece_animal (nom_espece, prix, poids_moyen, temperament, taille, longueur_vie, habitat, regime_alimentaire, sociable, description, photo) VALUES
-    ('Poisson rouge', 5.00, 0.05, 'Paisible', 0.10, 5, 'Aquarium', 'Omnivore', true, 'Petit poisson d’eau douce très populaire en aquarium.', 'poisson_rouge.png'),
-    ('Guppy', 3.00, 0.01, 'Actif', 0.04, 2, 'Aquarium', 'Omnivore', true, 'Poisson tropical très coloré et facile à élever.', 'guppy.png'),
-    ('Betta', 8.00, 0.03, 'Territorial', 0.06, 3, 'Aquarium', 'Carnivore', false, 'Poisson combattant aux couleurs vives.', 'betta.png'),
-    ('Hamster', 20.00, 0.15, 'Curieux', 0.12, 3, 'Cage', 'Omnivore', true, 'Petit rongeur nocturne.', 'hamster.png'),
-    ('Cochon d’Inde', 25.00, 0.80, 'Docile', 0.25, 5, 'Cage', 'Herbivore', true, 'Rongeur sociable.', 'cochon_indie.png'),
-    ('Lapin', 40.00, 2.50, 'Calme', 0.40, 8, 'Clapier / maison', 'Herbivore', true, 'Mammifère herbivore domestique.', 'lapin.png'),
-    ('Canari', 30.00, 0.02, 'Chantant', 0.15, 10, 'Cage', 'Granivore', true, 'Oiseau chanteur.', 'canari.png'),
-    ('Perroquet', 150.00, 0.90, 'Intelligent', 0.35, 50, 'Cage / volière', 'Omnivore', true, 'Oiseau coloré et bavard.', 'perroquet.png'),
-    ('Tortue de Floride', 100.00, 1.50, 'Calme', 0.25, 30, 'Aquarium / bassin', 'Omnivore', true, 'Tortue aquatique.', 'tortue_floride.png'),
-    ('Axolotl', 60.00, 0.15, 'Tranquille', 0.20, 15, 'Aquarium', 'Carnivore', true, 'Amphibien aquatique.', 'axolotl.png'),
-    ('Gecko léopard', 50.00, 0.06, 'Sociable', 0.20, 15, 'Terrarium', 'Carnivore', true, 'Petit lézard nocturne.', 'gecko_leopard.png'),
-    ('Serpent des blés', 80.00, 0.50, 'Docile', 1.20, 20, 'Terrarium', 'Carnivore', true, 'Serpent non venimeux.', 'serpent_ble.png'),
-    ('Poisson combattant', 7.00, 0.02, 'Agressif', 0.06, 3, 'Aquarium', 'Carnivore', false, 'Poisson solitaire.', 'poisson_combattant.png'),
-    ('Crapaud africain', 15.00, 0.20, 'Calme', 0.12, 10, 'Terrarium / aquarium', 'Omnivore', true, 'Amphibien robuste.', 'crapaud_africain.png'),
-    ('Calopsitte', 90.00, 0.10, 'Sociable', 0.30, 20, 'Cage / volière', 'Granivore', true, 'Oiseau australien.', 'calopsitte.png'),
-    ('Rat domestique', 12.00, 0.30, 'Intelligent', 0.25, 3, 'Cage', 'Omnivore', true, 'Rongeur très sociable.', 'rat.png'),
-    ('Poisson néon', 2.50, 0.01, 'Paisible', 0.03, 3, 'Aquarium', 'Omnivore', true, 'Petit poisson coloré.', 'neon.png'),
-    ('Perche soleil', 5.00, 0.10, 'Calme', 0.10, 6, 'Aquarium', 'Omnivore', true, 'Poisson d’eau douce.', 'perche_soleil.png');
+INSERT INTO espece_animal(nom_espece, prix, poids_moyen, temperament, taille, longueur_vie, habitat, regime_alimentaire, sociable, description, image) VALUES
+('Poisson rouge', 3.00, 0.10, 'Paisible', 10, 10, 'Aquarium', 'Omnivore', TRUE, 'Poisson d’eau douce très populaire.', 'poisson_rouge.png'),
+('Guppy', 2.50, 0.04, 'Actif', 5, 3, 'Aquarium', 'Omnivore', TRUE, 'Petit poisson tropical coloré.', 'guppy.png'),
+('Betta', 12.00, 0.06, 'Territorial', 4, 4, 'Aquarium', 'Carnivore', FALSE, 'Poisson combattant solitaire.', 'betta.png'),
+('Hamster', 15.00, 0.12, 'Curieux', 3, 2, 'Cage', 'Omnivore', TRUE, 'Petit rongeur nocturne.', 'hamster.png'),
+('Cochon d’Inde', 35.00, 0.25, 'Docile', 5, 6, 'Cage', 'Herbivore', TRUE, 'Rongeur sociable.', 'cochon_inde.png'),
+('Lapin', 60.00, 0.40, 'Calme', 8, 9, 'Maison / clapier', 'Herbivore', TRUE, 'Mammifère herbivore domestique.', 'lapin.png'),
+('Canari', 25.00, 0.15, 'Chantant', 10, 10, 'Cage', 'Granivore', TRUE, 'Petit oiseau chanteur.', 'canari.png'),
+('Perroquet', 250.00, 0.35, 'Intelligent', 50, 50, 'Volière', 'Omnivore', TRUE, 'Oiseau très intelligent.', 'perroquet.png'),
+('Tortue de Floride', 80.00, 0.25, 'Calme', 30, 30, 'Aquarium / bassin', 'Omnivore', TRUE, 'Tortue aquatique.', 'tortue_floride.png'),
+('Axolotl', 40.00, 0.20, 'Tranquille', 15, 15, 'Aquarium', 'Carnivore', TRUE, 'Amphibien aquatique.', 'axolotl.png'),
+('Gecko léopard', 50.00, 0.20, 'Sociable', 15, 20, 'Terrarium', 'Carnivore', TRUE, 'Lézard nocturne.', 'gecko_leopard.png'),
+('Serpent des blés', 90.00, 1.20, 'Docile', 20, 15, 'Terrarium', 'Carnivore', TRUE, 'Serpent non venimeux.', 'serpent_ble.png'),
+('Poisson combattant', 10.00, 0.06, 'Agressif', 3, 4, 'Aquarium', 'Carnivore', FALSE, 'Poisson solitaire.', 'poisson_combattant.png'),
+('Crapaud africain', 30.00, 0.12, 'Calme', 10, 10, 'Terrarium', 'Omnivore', TRUE, 'Amphibien robuste.', 'crapaud_africain.png'),
+('Calopsitte', 120.00, 0.30, 'Sociable', 20, 25, 'Volière', 'Granivore', TRUE, 'Oiseau australien.', 'calopsitte.png'),
+('Rat domestique', 20.00, 0.25, 'Intelligent', 3, 3, 'Cage', 'Omnivore', TRUE, 'Rongeur très sociable.', 'rat.png'),
+('Poisson néon', 2.00, 0.03, 'Paisible', 3, 5, 'Aquarium', 'Omnivore', TRUE, 'Petit poisson coloré.', 'neon.png'),
+('Perche soleil', 15.00, 0.30, 'Vif', 7, 6, 'Aquarium', 'Carnivore', TRUE, 'Poisson d’eau douce.', 'perche_soleil.png');
+
     '''
     mycursor.execute(sql)
 
     sql=''' 
-    CREATE TABLE categorie_animal(
-       id_categorie_animal INT AUTO_INCREMENT,
-       nom_categorie VARCHAR(100),
-    
-       PRIMARY KEY(id_categorie_animal)
-    ) DEFAULT CHARSET=utf8;
+
+CREATE TABLE categorie_animal(
+    id_categorie_animal INT AUTO_INCREMENT,
+    nom_categorie VARCHAR(100),
+
+    PRIMARY KEY(id_categorie_animal)
+);
     '''
     mycursor.execute(sql)
     sql=''' 
 INSERT INTO categorie_animal (nom_categorie) VALUES
-    ('Animal terrestre'),
-    ('Animal aérien'),
-    ('Animal aquatique'),
-    ('Animal amphibie'),
-    ('Animal reptile');
+('Poisson'),
+('Mammifère'),
+('Oiseau'),
+('Reptile'),
+('Amphibien');
     '''
     mycursor.execute(sql)
 
 
     sql=''' 
-    CREATE TABLE couleur(
-       id_couleur INT AUTO_INCREMENT,
-       nom_couleur VARCHAR(50),
-    
-       PRIMARY KEY(id_couleur)
-    )  DEFAULT CHARSET=utf8;  
+CREATE TABLE couleur(
+    id_couleur INT AUTO_INCREMENT,
+    nom_couleur VARCHAR(50),
+
+    PRIMARY KEY(id_couleur)
+);
     '''
     mycursor.execute(sql)
     sql = '''
 INSERT INTO couleur (nom_couleur) VALUES
-    ('Rouge'),
-    ('Blanc'),
-    ('Noir'),
-    ('Jaune'),
-    ('Vert'),
-    ('Bleu'),
-    ('Orange'),
-    ('Marron');
+('Rouge'), ('Blanc'), ('Noir'), ('Jaune'), ('Vert'), ('Bleu'), ('Orange'), ('Marron');
+
         '''
     mycursor.execute(sql)
 
     sql = ''' 
-    CREATE TABLE utilisateur(
-       id_utilisateur INT AUTO_INCREMENT,
-       login VARCHAR(100),
-       email VARCHAR(255),
-       nom_utilisateur VARCHAR(255),
-       password VARCHAR(255),
-       role VARCHAR(255),
-    
-       PRIMARY KEY(id_utilisateur)
-    )  DEFAULT CHARSET=utf8;  
+CREATE TABLE utilisateur(
+    id_utilisateur INT AUTO_INCREMENT,
+    login VARCHAR(100),
+    email VARCHAR(255),
+    nom_utilisateur VARCHAR(255),
+    password VARCHAR(255),
+    role VARCHAR(255),
+
+    PRIMARY KEY(id_utilisateur)
+);
      '''
     mycursor.execute(sql)
     sql = '''
-    INSERT INTO utilisateur (login, email, password, role) VALUES
-        ('admin', 'admin@', 'scrypt:32768:8:1$Ml2pV0qHPO9MleKy$a74be53606579df68da2f22ac167ab3dc8ad3bd34df1383634857442a4069a0994bc81bf771b4c8060174dd4ec7676445a33408e10dfacdeb39fffb6e230d7dd', 'ROLE_admin'),
-        ('client1', 'client1@', 'scrypt:32768:8:1$jiguhX3syLyTCCNi$613fc1ef298afc2f5e5e978e0cc7a0f96c17615695348b276dc4cf1e4147711cb2af27ae595eafb560a9554962e64a1c71af8d2a85e7c53f78bf848aec7a7618', 'ROLE_client'),
-        ('client2', 'client2@', 'scrypt:32768:8:1$c1vKyox517ZmFLC5$615b4fce3a1e31cb711077be5ab2f55b792d2d868d6fc51e0767b4bdfbafb08bf1875d26038786be3cb55e9f5bb5514e2f9b10d2b314a17a25a362ba1ac32902', 'ROLE_client');
-         '''
+INSERT INTO utilisateur (login, email, password, role) VALUES
+('admin', 'admin@', 'scrypt:32768:8:1$Ml2pV0qHPO9MleKy$a74be53606579df68da2f22ac167ab3dc8ad3bd34df1383634857442a4069a0994bc81bf771b4c8060174dd4ec7676445a33408e10dfacdeb39fffb6e230d7dd', 'ROLE_admin'),
+('client1', 'client1@', 'scrypt:32768:8:1$jiguhX3syLyTCCNi$613fc1ef298afc2f5e5e978e0cc7a0f96c17615695348b276dc4cf1e4147711cb2af27ae595eafb560a9554962e64a1c71af8d2a85e7c53f78bf848aec7a7618', 'ROLE_client'),
+('client2', 'client2@', 'scrypt:32768:8:1$c1vKyox517ZmFLC5$615b4fce3a1e31cb711077be5ab2f55b792d2d868d6fc51e0767b4bdfbafb08bf1875d26038786be3cb55e9f5bb5514e2f9b10d2b314a17a25a362ba1ac32902', 'ROLE_client');
+'''
     mycursor.execute(sql)
 
     sql = ''' 
-    CREATE TABLE etat(
-       id_etat INT AUTO_INCREMENT,
-       libelle_etat VARCHAR(100),
-    
-       PRIMARY KEY(id_etat)
-    ) DEFAULT CHARSET=utf8;  
+CREATE TABLE etat(
+    id_etat INT AUTO_INCREMENT,
+    libelle_etat VARCHAR(100),
+
+    PRIMARY KEY(id_etat)
+);
+
      '''
     mycursor.execute(sql)
     sql = '''
-    INSERT INTO etat (libelle_etat) VALUES
-     ('En attente'), ('Payée'), ('Expédiée'), ('Livrée'), ('Annulée');
+INSERT INTO etat (libelle_etat) VALUES
+('En attente'), ('Payée'), ('Expédiée'), ('Livrée'), ('Annulée');
+
                  '''
     mycursor.execute(sql)
 
     sql = '''
-    CREATE TABLE commande(
-       id_commande INT AUTO_INCREMENT,
-       date_achat DATE,
-       etat_id INT NOT NULL,
-    
-       PRIMARY KEY(id_commande),
-       FOREIGN KEY(etat_id) REFERENCES etat(id_etat)
-    ) DEFAULT CHARSET=utf8;
+CREATE TABLE commande(
+    id_commande INT AUTO_INCREMENT,
+    date_achat DATE,
+    etat_id INT,
+    utilisateur_id INT,
+
+    PRIMARY KEY(id_commande),
+    FOREIGN KEY(etat_id) REFERENCES etat(id_etat),
+    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
+);
           '''
     mycursor.execute(sql)
     sql = '''
-    INSERT INTO commande (date_achat, etat_id) VALUES
-        ('2024-01-10', 2),
-        ('2024-01-15', 3),
-        ('2024-01-20', 1);
+INSERT INTO commande (date_achat, etat_id) VALUES
+('2024-01-10', 2),
+('2024-01-15', 3),
+('2024-01-20', 1);
           '''
     mycursor.execute(sql)
 
     sql = '''
-    CREATE TABLE classification(
-       espece_animal_id INT,
-       categorie_animal_id INT,
-    
-       PRIMARY KEY(espece_animal_id, categorie_animal_id),
-       FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
-       FOREIGN KEY(categorie_animal_id) REFERENCES categorie_animal(id_categorie_animal)
-    ) DEFAULT CHARSET=utf8;
+CREATE TABLE classification(
+    espece_animal_id INT,
+    categorie_animal_id INT,
+
+    PRIMARY KEY(espece_animal_id, categorie_animal_id),
+    FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
+    FOREIGN KEY(categorie_animal_id) REFERENCES categorie_animal(id_categorie_animal)
+);
           '''
     mycursor.execute(sql)
     sql = '''
-    INSERT INTO classification (espece_animal_id, categorie_animal_id) VALUES
-        (1,3),(2,3),(3,3),(9,3),(13,3),(17,3),(18,3),
-        (4,1),(5,1),(6,1),(16,1),
-        (7,2),(8,2),(15,2),
-        (10,4),(14,4),
-        (11,5),(12,5);
+INSERT INTO classification(espece_animal_id, categorie_animal_id) VALUES
+(1,1),
+(2,1),
+(3,1),
+(13,1),
+(17,1),
+(18,1),
+(4,2),
+(5,2),
+(6,2),
+(16,2),
+(7,3),
+(8,3),
+(15,3),
+(9,4),
+(11,4),
+(12,4),
+(10,5),
+(14,5);
           '''
     mycursor.execute(sql)
 
     sql = '''
-    CREATE TABLE coloration(
-       espece_animal_id INT,
-       couleur_id INT,
-    
-       PRIMARY KEY(espece_animal_id, couleur_id),
-       FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
-       FOREIGN KEY(couleur_id) REFERENCES couleur(id_couleur)
-    ) DEFAULT CHARSET=utf8;
+CREATE TABLE variante(
+    id_variante INT AUTO_INCREMENT,
+    espece_animal_id INT,
+    couleur_id INT,
+    stock INT,
+
+    PRIMARY KEY(id_variante),
+    FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
+    FOREIGN KEY(couleur_id) REFERENCES couleur(id_couleur)
+);
           '''
     mycursor.execute(sql)
     sql = '''
-    INSERT INTO coloration (espece_animal_id, couleur_id) VALUES
-        (1,1),(1,7),(2,6),(3,1),(4,8),(6,2),(7,4),(8,6),(11,8),(12,3);
+INSERT INTO variante (espece_animal_id, couleur_id, stock) VALUES
+-- Poisson rouge
+(1,7,30),(1,1,20),(1,2,15),
+
+-- Guppy
+(2,6,40),(2,1,25),(2,4,20),
+
+-- Betta
+(3,1,15),(3,6,10),(3,3,8),
+
+-- Hamster
+(4,8,20),(4,2,15),(4,3,10),
+
+-- Cochon d’Inde
+(5,2,18),(5,8,12),
+
+-- Lapin
+(6,2,10),(6,3,8),(6,8,6),
+
+-- Canari
+(7,4,25),(7,2,15),
+
+-- Perroquet
+(8,5,6),(8,6,5),(8,1,4),
+
+-- Tortue de Floride
+(9,5,12),(9,3,8),
+
+-- Axolotl
+(10,2,10),(10,3,8),(10,1,6),
+
+-- Gecko léopard
+(11,8,15),(11,2,10),
+
+-- Serpent des blés
+(12,1,10),(12,7,6),(12,8,5),
+
+-- Poisson combattant
+(13,1,12),(13,6,8),
+
+-- Crapaud africain
+(14,5,14),(14,8,10),
+
+-- Calopsitte
+(15,4,10),(15,2,8),
+
+-- Rat domestique
+(16,3,20),(16,2,15),(16,8,10),
+
+-- Poisson néon
+(17,6,40),(17,1,20),
+
+-- Perche soleil
+(18,5,15),(18,4,10);
           '''
     mycursor.execute(sql)
 
     sql = ''' 
-    CREATE TABLE ligne_commande(
-       espece_animal_id INT,
-       commande_id INT,
-       prix DECIMAL(15,2),
-       quantite INT,
-    
-       PRIMARY KEY(espece_animal_id, commande_id),
-       FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
-       FOREIGN KEY(commande_id) REFERENCES commande(id_commande)
-    ) DEFAULT CHARSET=utf8;
+CREATE TABLE ligne_commande(
+    variante_id INT,
+    commande_id INT,
+    prix_commande DECIMAL(15,2),
+    quantite INT,
+
+    PRIMARY KEY(variante_id, commande_id),
+    FOREIGN KEY(variante_id) REFERENCES variante(id_variante),
+    FOREIGN KEY(commande_id) REFERENCES commande(id_commande)
+);
          '''
     mycursor.execute(sql)
     sql = '''
-    INSERT INTO ligne_commande (espece_animal_id, commande_id, prix, quantite) VALUES
-        (1,1,5.00,2),
-        (4,1,20.00,1),
-        (7,2,30.00,1),
-        (11,3,50.00,1);
+INSERT INTO ligne_commande (variante_id, commande_id, prix_commande, quantite) VALUES
+(1,1,5.00,2),
+(4,1,20.00,1),
+(7,2,30.00,1),
+(11,3,50.00,1);
           '''
     mycursor.execute(sql)
 
 
     sql = ''' 
-    CREATE TABLE ligne_panier(
-       espece_animal_id INT,
-       utilisateur_id INT,
-       quantite INT,
-       date_ajout DATE,
-    
-       PRIMARY KEY(espece_animal_id, utilisateur_id),
-       FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
-       FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
-    );  
+CREATE TABLE ligne_panier(
+    variante_id INT,
+    utilisateur_id INT,
+    quantite INT,
+    date_ajout DATE,
+
+    PRIMARY KEY(variante_id, utilisateur_id),
+    FOREIGN KEY(variante_id) REFERENCES variante(id_variante),
+    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
+);
          '''
     mycursor.execute(sql)
 
     sql = '''
-    INSERT INTO ligne_panier(espece_animal_id, utilisateur_id, quantite, date_ajout) VALUES
-        (3, 2, 1, '2024-01-25'),
-        (6, 2, 1, '2024-01-25'),
-        (8, 3, 1, '2024-01-26');
+INSERT INTO ligne_panier (variante_id, utilisateur_id, quantite, date_ajout) VALUES
+(3,2,5,'2024-01-25'),
+(6,2,9,'2024-01-25'),
+(8,3,1,'2024-01-26');
           '''
     mycursor.execute(sql)
 

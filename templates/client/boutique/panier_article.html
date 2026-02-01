@@ -30,7 +30,7 @@
                                     €
                                 </h3>
                                      {%  if article.image is not none %}
-                                        <img class="card-img-top rounded mx-auto d-block"  style="width:100px;height:100px"  src="{{ url_for('static', filename = 'images/')}}{{ article.image }}"  alt="image  de {{ article.nom }}" >
+                                        <img style="width: 300px; height: 300px;" class="card-img-top rounded mx-auto d-block"  style="width:100px;height:100px"  src="{{ url_for('static', filename = 'images/')}}{{ article.image }}"  alt="image  de {{ article.nom }}" >
                                     {% else %} <img class="card-img-top rounded mx-auto d-block"   style="width:100px;height:100px"   src="{{ url_for('static', filename='images/no_photo.jpeg')}}"  alt="image  de {{ article.nom }}" >
                                     {% endif %}
                                     <hr>
@@ -67,10 +67,12 @@
                                  {% else %}
                                     <small class="text-muted">article  momentanément indisponible</small>
                                  {% endif %}
+
                                 {% if article.nb_declinaison is defined and article.nb_declinaison != None %}
                                     ({{ article.nb_declinaison }} d.)
                                 {% endif %}
                                 <br>
+
                             {% endif %}
                             {% if article.nb_notes is defined %}
                                 {% if article.nb_notes > 0 %}

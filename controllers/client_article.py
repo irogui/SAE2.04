@@ -28,7 +28,15 @@ def client_article_show():                                 # remplace client_ind
 
     mycursor = get_db().cursor()
 
-    sql = ''' SELECT id_espece_animal AS id_article, nom_espece AS nom, prix, photo AS image, stock FROM espece_animal ORDER BY nom_espece; '''
+    sql = ''' SELECT espece_animal.id_espece_animal AS id_article,
+                     espece_animal.nom_espece AS nom,
+                     espece_animal.prix,
+                     espece_animal.image,
+                     SUM(variante.stock) AS stock
+                     FROM espece_animal
+                     JOIN variante ON variante.espece_animal_id = espece_animal.id_espece_animal
+                     GROUP BY espece_animal.id_espece_animal, espece_animal.nom_espece, espece_animal.prix, espece_animal.image
+                     ORDER BY nom; '''
     mycursor.execute(sql)
     articles = mycursor.fetchall()
 
@@ -36,24 +44,50 @@ def client_article_show():                                 # remplace client_ind
     mycursor.execute(sql)
     items_filtre = mycursor.fetchall()
 
-    sql = ''' SELECT    id_espece_animal,
-                        nom_espece AS nom,  
-                        
-                        FROM ligne_panier 
-                        ORDER BY ; '''
-    mycursor.execute(sql)
+    sql = ''' SELECT nom_espece AS nom,
+                     id_couleur, 
+                     nom_couleur AS libelle_couleur,
+                     quantite,
+                     prix,
+                     stock
+                     
+                     FROM variante
+                     JOIN ligne_panier on variante.id_variante = ligne_panier.variante_id
+                     JOIN couleur ON couleur.id_couleur = variante.couleur_id
+                     JOIN espece_animal ON espece_animal.id_espece_animal = variante.espece_animal_id
+                    
+                     WHERE utilisateur_id = %s    
+                     ORDER BY date_ajout;'''
+    mycursor.execute(sql, id_client)
     articles_panier = mycursor.fetchall()
 
+    sql_total = '''
+        SELECT SUM(espece_animal.prix * ligne_panier.quantite) AS prix_total
+        FROM ligne_panier
+        JOIN variante ON variante.id_variante = ligne_panier.variante_id
+        JOIN espece_animal ON espece_animal.id_espece_animal = variante.espece_animal_id
+        
+        WHERE ligne_panier.utilisateur_id = %s;
+    '''
+    mycursor.execute(sql_total, id_client)
+    result = mycursor.fetchone()
 
-    if len(articles_panier) >= 1:
-        sql = ''' calcul du prix total du panier '''
-        prix_total = None
+    if result['prix_total'] is not None:
+        prix_total = result['prix_total']
     else:
         prix_total = None
+
+
+    #if len(articles_panier) >= 1:
+    #    prix_total = None
+    #else:
+    #   prix_total = None
+
+    print(prix_total)
 
     return render_template('client/boutique/panier_article.html'
                            , articles=articles
                            , articles_panier=articles_panier
-                           #, prix_total=prix_total
+                           , prix_total=prix_total
                            , items_filtre=items_filtre
                            )
