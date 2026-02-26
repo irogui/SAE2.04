@@ -11,8 +11,47 @@ client_article = Blueprint('client_article', __name__, template_folder='template
 @client_article.route('/client/article/show')              # remplace /client
 def client_article_show():                                 # remplace client_index
 
-    list_param = []
+
+    # Création de la condition WHERE pour le filtre
+    condition = []
+    parametre = []
     condition_and = ""
+
+    list_param = session.get("filter_types") or []
+    if (list_param != []):
+        print('bab')
+        print(list_param)
+        placeholders = ",".join(["%s"] * len(list_param))
+        condition.append(f"nom_categorie IN ({placeholders})")
+        parametre.extend(list_param)
+    else:
+        print("list_param NONE")
+
+
+    prix_min = session.get("filter_prix_min") or None
+
+    if prix_min != None:
+        print(prix_min)
+        condition.append("prix >= %s")
+        parametre.append(prix_min)
+
+
+    prix_max = session.get("filter_prix_max") or None
+
+    if prix_max != None:
+        condition.append("prix <= %s")
+        parametre.append(prix_max)
+
+
+    filtre_texte = session.get("filter_word") or None
+
+    if filtre_texte != None:
+        condition.append("nom_espece LIKE %s")
+        parametre.append(f"%{filtre_texte}%")
+
+    if condition != []:
+        condition_and ="WHERE " + " AND ".join(condition)
+
 
     # utilisation du filtre
     sql3 = ''' prise en compte des commentaires et des notes dans le SQL    '''
@@ -21,26 +60,29 @@ def client_article_show():                                 # remplace client_ind
     # pour le filtre
     types_article = []
 
-    articles_panier = []
-
 
     id_client = session['id_user']
 
     mycursor = get_db().cursor()
 
-    sql = ''' SELECT espece_animal.id_espece_animal AS id_article,
+    sql = f''' SELECT espece_animal.id_espece_animal AS id_article,
                      espece_animal.nom_espece AS nom,
                      espece_animal.prix,
                      espece_animal.image,
                      SUM(variante.stock) AS stock
                      FROM espece_animal
                      JOIN variante ON variante.espece_animal_id = espece_animal.id_espece_animal
+                     -- JOIN pour le filtre par catégorie
+                     JOIN classification AS class ON class.espece_animal_id = espece_animal.id_espece_animal
+                     JOIN categorie_animal AS cat ON cat.id_categorie_animal = class.categorie_animal_id
+                     -- ligne WHERE du filtre
+                     {condition_and}
                      GROUP BY espece_animal.id_espece_animal, espece_animal.nom_espece, espece_animal.prix, espece_animal.image
                      ORDER BY nom; '''
-    mycursor.execute(sql)
+    mycursor.execute(sql, parametre)
     articles = mycursor.fetchall()
 
-    sql = ''' SELECT id_categorie_animal AS id_type_article, nom_categorie AS libelle FROM categorie_animal ORDER BY nom_categorie; '''
+    sql = ''' SELECT nom_categorie AS id_type_article, nom_categorie AS libelle FROM categorie_animal ORDER BY nom_categorie; '''
     mycursor.execute(sql)
     items_filtre = mycursor.fetchall()
 
@@ -84,6 +126,15 @@ def client_article_show():                                 # remplace client_ind
     #   prix_total = None
 
     print(prix_total)
+    if condition_and != "":
+        print(condition_and)
+    else:
+        print("vide!")
+
+    if parametre != []:
+        print(parametre)
+    else:
+        print("vide!")
 
     return render_template('client/boutique/panier_article.html'
                            , articles=articles
