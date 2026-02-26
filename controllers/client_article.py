@@ -73,8 +73,7 @@ def client_article_show():                                 # remplace client_ind
                      FROM espece_animal
                      JOIN variante ON variante.espece_animal_id = espece_animal.id_espece_animal
                      -- JOIN pour le filtre par catégorie
-                     JOIN classification AS class ON class.espece_animal_id = espece_animal.id_espece_animal
-                     JOIN categorie_animal AS cat ON cat.id_categorie_animal = class.categorie_animal_id
+                     JOIN categorie_animal AS cat ON cat.id_categorie_animal = espece_animal.categorie_animal_id
                      -- ligne WHERE du filtre
                      {condition_and}
                      GROUP BY espece_animal.id_espece_animal, espece_animal.nom_espece, espece_animal.prix, espece_animal.image
