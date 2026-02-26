@@ -13,6 +13,8 @@ def fct_fixtures_load():
     mycursor = get_db().cursor()
     sql='''DROP TABLE IF EXISTS ligne_panier, ligne_commande, variante, commande, etat, utilisateur, couleur, espece_animal, categorie_animal;
 '''
+    mycursor.execute(sql)
+
     sql = ''' 
 
     CREATE TABLE categorie_animal(
@@ -33,7 +35,6 @@ def fct_fixtures_load():
         '''
     mycursor.execute(sql)
 
-    mycursor.execute(sql)
     sql='''
     CREATE TABLE espece_animal(
     id_espece_animal INT AUTO_INCREMENT,
