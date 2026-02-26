@@ -11,8 +11,27 @@ fixtures_load = Blueprint('fixtures_load', __name__,
 @fixtures_load.route('/base/init')
 def fct_fixtures_load():
     mycursor = get_db().cursor()
-    sql='''DROP TABLE IF EXISTS ligne_panier, ligne_commande, variante, classification, commande, etat, utilisateur, couleur, categorie_animal, espece_animal;
+    sql='''DROP TABLE IF EXISTS ligne_panier, ligne_commande, variante, commande, etat, utilisateur, couleur, espece_animal, categorie_animal;
 '''
+    sql = ''' 
+
+    CREATE TABLE categorie_animal(
+        id_categorie_animal INT AUTO_INCREMENT,
+        nom_categorie VARCHAR(100),
+
+        PRIMARY KEY(id_categorie_animal)
+    );
+        '''
+    mycursor.execute(sql)
+    sql = ''' 
+    INSERT INTO categorie_animal (nom_categorie) VALUES
+    ('Poisson'),
+    ('Mammifère'),
+    ('Oiseau'),
+    ('Reptile'),
+    ('Amphibien');
+        '''
+    mycursor.execute(sql)
 
     mycursor.execute(sql)
     sql='''
@@ -29,53 +48,36 @@ def fct_fixtures_load():
     sociable BOOLEAN,
     description VARCHAR(8000),
     image VARCHAR(255),
+    categorie_animal_id INT,
 
-    PRIMARY KEY(id_espece_animal)
+    PRIMARY KEY(id_espece_animal),
+    FOREIGN KEY (categorie_animal_id) REFERENCES categorie_animal(id_categorie_animal)
 );
 
     '''
     mycursor.execute(sql)
-    sql=''' 
-INSERT INTO espece_animal(nom_espece, prix, poids_moyen, temperament, taille, longueur_vie, habitat, regime_alimentaire, sociable, description, image) VALUES
-('Poisson rouge', 3.00, 0.10, 'Paisible', 10, 10, 'Aquarium', 'Omnivore', TRUE, 'Poisson d’eau douce très populaire.', 'poisson_rouge.png'),
-('Guppy', 2.50, 0.04, 'Actif', 5, 3, 'Aquarium', 'Omnivore', TRUE, 'Petit poisson tropical coloré.', 'guppy.png'),
-('Betta', 12.00, 0.06, 'Territorial', 4, 4, 'Aquarium', 'Carnivore', FALSE, 'Poisson combattant solitaire.', 'betta.png'),
-('Hamster', 15.00, 0.12, 'Curieux', 3, 2, 'Cage', 'Omnivore', TRUE, 'Petit rongeur nocturne.', 'hamster.png'),
-('Cochon d’Inde', 35.00, 0.25, 'Docile', 5, 6, 'Cage', 'Herbivore', TRUE, 'Rongeur sociable.', 'cochon_inde.png'),
-('Lapin', 60.00, 0.40, 'Calme', 8, 9, 'Maison / clapier', 'Herbivore', TRUE, 'Mammifère herbivore domestique.', 'lapin.png'),
-('Canari', 25.00, 0.15, 'Chantant', 10, 10, 'Cage', 'Granivore', TRUE, 'Petit oiseau chanteur.', 'canari.png'),
-('Perroquet', 250.00, 0.35, 'Intelligent', 50, 50, 'Volière', 'Omnivore', TRUE, 'Oiseau très intelligent.', 'perroquet.png'),
-('Tortue de Floride', 80.00, 0.25, 'Calme', 30, 30, 'Aquarium / bassin', 'Omnivore', TRUE, 'Tortue aquatique.', 'tortue_floride.png'),
-('Axolotl', 40.00, 0.20, 'Tranquille', 15, 15, 'Aquarium', 'Carnivore', TRUE, 'Amphibien aquatique.', 'axolotl.png'),
-('Gecko léopard', 50.00, 0.20, 'Sociable', 15, 20, 'Terrarium', 'Carnivore', TRUE, 'Lézard nocturne.', 'gecko_leopard.png'),
-('Serpent des blés', 90.00, 1.20, 'Docile', 20, 15, 'Terrarium', 'Carnivore', TRUE, 'Serpent non venimeux.', 'serpent_ble.png'),
-('Poisson combattant', 10.00, 0.06, 'Agressif', 3, 4, 'Aquarium', 'Carnivore', FALSE, 'Poisson solitaire.', 'poisson_combattant.png'),
-('Crapaud africain', 30.00, 0.12, 'Calme', 10, 10, 'Terrarium', 'Omnivore', TRUE, 'Amphibien robuste.', 'crapaud_africain.png'),
-('Calopsitte', 120.00, 0.30, 'Sociable', 20, 25, 'Volière', 'Granivore', TRUE, 'Oiseau australien.', 'calopsitte.png'),
-('Rat domestique', 20.00, 0.25, 'Intelligent', 3, 3, 'Cage', 'Omnivore', TRUE, 'Rongeur très sociable.', 'rat.png'),
-('Poisson néon', 2.00, 0.03, 'Paisible', 3, 5, 'Aquarium', 'Omnivore', TRUE, 'Petit poisson coloré.', 'neon.png'),
-('Perche soleil', 15.00, 0.30, 'Vif', 7, 6, 'Aquarium', 'Carnivore', TRUE, 'Poisson d’eau douce.', 'perche_soleil.png');
-
-    '''
-    mycursor.execute(sql)
 
     sql=''' 
+        INSERT INTO espece_animal(nom_espece, prix, poids_moyen, temperament, taille, longueur_vie, habitat, regime_alimentaire, sociable, description, image, categorie_animal_id) VALUES
+('Poisson rouge', 3.00, 0.10, 'Paisible', 10, 10, 'Aquarium', 'Omnivore', TRUE, 'Poisson d’eau douce très populaire.', 'poisson_rouge.png', 1),
+('Guppy', 2.50, 0.04, 'Actif', 5, 3, 'Aquarium', 'Omnivore', TRUE, 'Petit poisson tropical coloré.', 'guppy.png', 1),
+('Betta', 12.00, 0.06, 'Territorial', 4, 4, 'Aquarium', 'Carnivore', FALSE, 'Poisson combattant solitaire.', 'betta.png', 1),
+('Hamster', 15.00, 0.12, 'Curieux', 3, 2, 'Cage', 'Omnivore', TRUE, 'Petit rongeur nocturne.', 'hamster.png', 2),
+('Cochon d’Inde', 35.00, 0.25, 'Docile', 5, 6, 'Cage', 'Herbivore', TRUE, 'Rongeur sociable.', 'cochon_inde.png', 5),
+('Lapin', 60.00, 0.40, 'Calme', 8, 9, 'Maison / clapier', 'Herbivore', TRUE, 'Mammifère herbivore domestique.', 'lapin.png', 2),
+('Canari', 25.00, 0.15, 'Chantant', 10, 10, 'Cage', 'Granivore', TRUE, 'Petit oiseau chanteur.', 'canari.png', 3),
+('Perroquet', 250.00, 0.35, 'Intelligent', 50, 50, 'Volière', 'Omnivore', TRUE, 'Oiseau très intelligent.', 'perroquet.png', 3),
+('Tortue de Floride', 80.00, 0.25, 'Calme', 30, 30, 'Aquarium / bassin', 'Omnivore', TRUE, 'Tortue aquatique.', 'tortue_floride.png', 4),
+('Axolotl', 40.00, 0.20, 'Tranquille', 15, 15, 'Aquarium', 'Carnivore', TRUE, 'Amphibien aquatique.', 'axolotl.png', 5),
+('Gecko léopard', 50.00, 0.20, 'Sociable', 15, 20, 'Terrarium', 'Carnivore', TRUE, 'Lézard nocturne.', 'gecko_leopard.png', 4),
+('Serpent des blés', 90.00, 1.20, 'Docile', 20, 15, 'Terrarium', 'Carnivore', TRUE, 'Serpent non venimeux.', 'serpent_ble.png', 4),
+('Poisson combattant', 10.00, 0.06, 'Agressif', 3, 4, 'Aquarium', 'Carnivore', FALSE, 'Poisson solitaire.', 'poisson_combattant.png', 1),
+('Crapaud africain', 30.00, 0.12, 'Calme', 10, 10, 'Terrarium', 'Omnivore', TRUE, 'Amphibien robuste.', 'crapaud_africain.png', 5),
+('Calopsitte', 120.00, 0.30, 'Sociable', 20, 25, 'Volière', 'Granivore', TRUE, 'Oiseau australien.', 'calopsitte.png', 3),
+('Rat domestique', 20.00, 0.25, 'Intelligent', 3, 3, 'Cage', 'Omnivore', TRUE, 'Rongeur très sociable.', 'rat.png', 2),
+('Poisson néon', 2.00, 0.03, 'Paisible', 3, 5, 'Aquarium', 'Omnivore', TRUE, 'Petit poisson coloré.', 'neon.png', 1),
+('Perche soleil', 15.00, 0.30, 'Vif', 7, 6, 'Aquarium', 'Carnivore', TRUE, 'Poisson d’eau douce.', 'perche_soleil.png', 1);
 
-CREATE TABLE categorie_animal(
-    id_categorie_animal INT AUTO_INCREMENT,
-    nom_categorie VARCHAR(100),
-
-    PRIMARY KEY(id_categorie_animal)
-);
-    '''
-    mycursor.execute(sql)
-    sql=''' 
-INSERT INTO categorie_animal (nom_categorie) VALUES
-('Poisson'),
-('Mammifère'),
-('Oiseau'),
-('Reptile'),
-('Amphibien');
     '''
     mycursor.execute(sql)
 
@@ -89,6 +91,7 @@ CREATE TABLE couleur(
 );
     '''
     mycursor.execute(sql)
+
     sql = '''
 INSERT INTO couleur (nom_couleur) VALUES
 ('Rouge'), ('Blanc'), ('Noir'), ('Jaune'), ('Vert'), ('Bleu'), ('Orange'), ('Marron');
@@ -152,40 +155,6 @@ INSERT INTO commande (date_achat, etat_id) VALUES
 ('2024-01-10', 2),
 ('2024-01-15', 3),
 ('2024-01-20', 1);
-          '''
-    mycursor.execute(sql)
-
-    sql = '''
-CREATE TABLE classification(
-    espece_animal_id INT,
-    categorie_animal_id INT,
-
-    PRIMARY KEY(espece_animal_id, categorie_animal_id),
-    FOREIGN KEY(espece_animal_id) REFERENCES espece_animal(id_espece_animal),
-    FOREIGN KEY(categorie_animal_id) REFERENCES categorie_animal(id_categorie_animal)
-);
-          '''
-    mycursor.execute(sql)
-    sql = '''
-INSERT INTO classification(espece_animal_id, categorie_animal_id) VALUES
-(1,1),
-(2,1),
-(3,1),
-(13,1),
-(17,1),
-(18,1),
-(4,2),
-(5,2),
-(6,2),
-(16,2),
-(7,3),
-(8,3),
-(15,3),
-(9,4),
-(11,4),
-(12,4),
-(10,5),
-(14,5);
           '''
     mycursor.execute(sql)
 
