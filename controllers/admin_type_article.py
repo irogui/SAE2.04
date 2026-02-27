@@ -11,10 +11,13 @@ admin_type_article = Blueprint('admin_type_article', __name__,
 @admin_type_article.route('/admin/type-article/show')
 def show_type_article():
     mycursor = get_db().cursor()
-    # sql = '''         '''
-    # mycursor.execute(sql)
-    # types_article = mycursor.fetchall()
-    types_article=[]
+
+    sql = ''' SELECT id_categorie_animal AS id_type_article,
+                     nom_categorie AS libelle
+                     FROM categorie_animal;'''
+    mycursor.execute(sql)
+    types_article = mycursor.fetchall()
+
     return render_template('admin/type_article/show_type_article.html', types_article=types_article)
 
 @admin_type_article.route('/admin/type-article/add', methods=['GET'])
@@ -24,11 +27,14 @@ def add_type_article():
 @admin_type_article.route('/admin/type-article/add', methods=['POST'])
 def valid_add_type_article():
     libelle = request.form.get('libelle', '')
-    tuple_insert = (libelle,)
+
     mycursor = get_db().cursor()
-    sql = '''         '''
+
+    sql = ''' INSERT INTO categorie_animal(nom_categorie) VALUES (%s); '''
+    tuple_insert = (libelle,)
     mycursor.execute(sql, tuple_insert)
     get_db().commit()
+
     message = u'type ajouté , libellé :'+libelle
     flash(message, 'alert-success')
     return redirect('/admin/type-article/show') #url_for('show_type_article')
@@ -36,36 +42,48 @@ def valid_add_type_article():
 @admin_type_article.route('/admin/type-article/delete', methods=['GET'])
 def delete_type_article():
     id_type_article = request.args.get('id_type_article', '')
+
     mycursor = get_db().cursor()
 
-    flash(u'suppression type article , id : ' + id_type_article, 'alert-success')
+    sql = ''' SELECT COUNT(id_espece_animal) AS compte FROM espece_animal WHERE categorie_animal_id = %s; '''
+    mycursor.execute(sql, (id_type_article,))
+    especes = mycursor.fetchone()
+
+    if especes and especes['compte'] > 0:
+        flash(f'Impossible de supprimer cette catégorie car {especes['compte']} especes lui sont reliées!', 'alert-warning')
+
+    else:
+        sql = ''' DELETE FROM categorie_animal WHERE id_categorie_animal = %s; '''
+        mycursor.execute(sql, (id_type_article,))
+        get_db().commit()
+
+        flash(u'suppression type article , id : ' + id_type_article, 'alert-success')
+
     return redirect('/admin/type-article/show')
 
 @admin_type_article.route('/admin/type-article/edit', methods=['GET'])
 def edit_type_article():
     id_type_article = request.args.get('id_type_article', '')
+
     mycursor = get_db().cursor()
-    sql = '''   '''
+
+    sql = ''' SELECT id_categorie_animal AS id_type_article, nom_categorie AS libelle FROM categorie_animal WHERE id_categorie_animal = %s; '''
     mycursor.execute(sql, (id_type_article,))
     type_article = mycursor.fetchone()
+
     return render_template('admin/type_article/edit_type_article.html', type_article=type_article)
 
 @admin_type_article.route('/admin/type-article/edit', methods=['POST'])
 def valid_edit_type_article():
     libelle = request.form['libelle']
     id_type_article = request.form.get('id_type_article', '')
+
     tuple_update = (libelle, id_type_article)
+
     mycursor = get_db().cursor()
-    sql = '''   '''
+    sql = ''' UPDATE categorie_animal SET nom_categorie = %s WHERE id_categorie_animal = %s; '''
     mycursor.execute(sql, tuple_update)
     get_db().commit()
+
     flash(u'type article modifié, id: ' + id_type_article + " libelle : " + libelle, 'alert-success')
     return redirect('/admin/type-article/show')
-
-
-
-
-
-
-
-

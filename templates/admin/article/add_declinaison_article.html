@@ -12,7 +12,7 @@
     {% endif %}
         <div class="w-25">
             <form class="w-190" method="post" action="/admin/declinaison_article/add">
-                <input id="id_article" type="hidden" name="id_article" value="{{ article.id_article }}">
+                <input id="id_article" type="hidden" name="id_article" value="{{ article['id_article'] }}">
                 <label for="stock">stock :
                     <input name="stock" id="stock" type="number" class="form-control" required>
                 </label>
@@ -29,7 +29,7 @@
                     </select>
                 </label>
                 {% endif %}
-                {% if  d_taille_uniq is defined and  d_taille_uniq==1 %}
+                <!--{% if  d_taille_uniq is defined and  d_taille_uniq==1 %}
                     <div>!</div><div><strong>Une taille unique est définie </strong></div>
                     <input type="hidden" name="taille" value="1">
                 {% else %}
@@ -41,7 +41,7 @@
                         {% endfor %}
                     </select>
                 </label>
-                {% endif %}
+                {% endif %}-->
                 <label for="submit">
                     <input name="submit" type="submit" value="Ajouter" class="btn btn-primary mt-2">
                 </label>

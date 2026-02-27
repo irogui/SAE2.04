@@ -66,7 +66,7 @@
                             <th>login client</th>
                             <th>Date de commande</th>
                             <th>Nombre d'articles</th>
-                            <th>Coût total</th>
+                            <th>Coût total (€)</th>
                             <th>Etat de la commande</th>
                             <th style="text-align: center;">Options</th>
                         </tr>
@@ -78,7 +78,7 @@
                                 <td>{{ commande.date_achat.strftime('%d-%m-%Y') }}</td>
                                 <td> {{ commande.nbr_articles }} </td>
                                 <td>
-                                    {{ commande.prix_total }}
+                                    {{ commande.prix_total }} €
                                 </td>
                                 <td> {{ commande.libelle }}</td>
                                 <td style="text-align: center;">
