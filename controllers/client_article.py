@@ -69,13 +69,14 @@ def client_article_show():                                 # remplace client_ind
                      espece_animal.nom_espece AS nom,
                      espece_animal.prix,
                      espece_animal.image,
-                     SUM(variante.stock) AS stock
+                     SUM(stock) AS stock,
+                     COUNT(id_variante) AS nb_declinaison
+                     
                      FROM espece_animal
                      JOIN variante ON variante.espece_animal_id = espece_animal.id_espece_animal
-                     -- JOIN pour le filtre par catégorie
                      JOIN categorie_animal AS cat ON cat.id_categorie_animal = espece_animal.categorie_animal_id
-                     -- ligne WHERE du filtre
                      {condition_and}
+                     
                      GROUP BY espece_animal.id_espece_animal, espece_animal.nom_espece, espece_animal.prix, espece_animal.image
                      ORDER BY nom; '''
     mycursor.execute(sql, parametre)
@@ -90,7 +91,8 @@ def client_article_show():                                 # remplace client_ind
                      nom_couleur AS libelle_couleur,
                      quantite,
                      prix,
-                     stock
+                     stock,
+                     id_variante AS id_declinaison_article
                      
                      FROM variante
                      JOIN ligne_panier on variante.id_variante = ligne_panier.variante_id

@@ -24,7 +24,7 @@
             <ul>
                 {% for item_declinaison in declinaisons  %}
                     <li>
-                    {% if item_declinaison.id_couleur is defined and  item_declinaison.id_couleur > 1 %}
+                    {% if item_declinaison.id_couleur is defined %}
                         couleur : <stong style="color:{{ item_declinaison.code_couleur }}">{{ item_declinaison.libelle_couleur }}</stong>
                     {% endif %}
                     {% if item_declinaison.id_taille is defined and  item_declinaison.id_taille > 1 %}
