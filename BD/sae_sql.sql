@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS ligne_commande;
 DROP TABLE IF EXISTS variante;
 DROP TABLE IF EXISTS commande;
 DROP TABLE IF EXISTS etat;
+DROP TABLE IF EXISTS adresse_facturation;
 DROP TABLE IF EXISTS utilisateur;
 DROP TABLE IF EXISTS couleur;
 DROP TABLE IF EXISTS espece_animal;
@@ -53,6 +54,19 @@ CREATE TABLE utilisateur(
     PRIMARY KEY(id_utilisateur)
 );
 
+CREATE TABLE adresse_facturation(
+   id_adresse INT AUTO_INCREMENT,
+   nom_adresse VARCHAR(50),
+   prenom_adresse VARCHAR(50),
+   rue VARCHAR(50),
+   code_postal VARCHAR(50),
+   ville VARCHAR(50),
+   utilisateur_id INT,
+
+   PRIMARY KEY(id_adresse),
+   FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
+);
+
 CREATE TABLE etat(
     id_etat INT AUTO_INCREMENT,
     libelle_etat VARCHAR(100),
@@ -65,10 +79,12 @@ CREATE TABLE commande(
     date_achat DATE,
     etat_id INT,
     utilisateur_id INT,
+    adresse_id INT,
 
     PRIMARY KEY(id_commande),
     FOREIGN KEY(etat_id) REFERENCES etat(id_etat),
-    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
+    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur),
+    FOREIGN KEY(adresse_id) REFERENCES adresse_facturation(id_adresse)
 );
 
 CREATE TABLE variante(
