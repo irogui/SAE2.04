@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS ligne_commande;
 DROP TABLE IF EXISTS variante;
 DROP TABLE IF EXISTS commande;
 DROP TABLE IF EXISTS etat;
-DROP TABLE IF EXISTS adresse_facturation;
 DROP TABLE IF EXISTS utilisateur;
 DROP TABLE IF EXISTS couleur;
 DROP TABLE IF EXISTS espece_animal;
@@ -52,19 +51,6 @@ CREATE TABLE utilisateur(
     role VARCHAR(255),
 
     PRIMARY KEY(id_utilisateur)
-);
-
-CREATE TABLE adresse_facturation(
-   id_adresse INT AUTO_INCREMENT,
-   nom_adresse VARCHAR(50),
-   prenom_adresse VARCHAR(50),
-   rue VARCHAR(50),
-   code_postal VARCHAR(50),
-   ville VARCHAR(50),
-   utilisateur_id INT,
-
-   PRIMARY KEY(id_adresse),
-   FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
 );
 
 CREATE TABLE etat(
@@ -159,11 +145,6 @@ INSERT INTO utilisateur (login, email, password, role) VALUES
 INSERT INTO etat (libelle_etat) VALUES
 ('En attente'), ('Payée'), ('Expédiée'), ('Livrée'), ('Annulée');
 
-INSERT INTO commande (date_achat, etat_id, utilisateur_id) VALUES
-('2024-01-10', 2, 1),
-('2024-01-15', 3, 2),
-('2024-01-20', 1, 3);
-
 INSERT INTO variante (espece_animal_id, couleur_id, stock) VALUES
 -- Poisson rouge
 (1,7,30),(1,1,20),(1,2,15),
@@ -218,13 +199,6 @@ INSERT INTO variante (espece_animal_id, couleur_id, stock) VALUES
 
 -- Perche soleil
 (18,5,15),(18,4,10);
-
-
-INSERT INTO ligne_commande (variante_id, commande_id, prix_commande, quantite) VALUES
-(1,1,3.00,2),
-(4,1,15.00,1),
-(7,2,25.00,1),
-(11,3,50.00,1);
 
 INSERT INTO ligne_panier (variante_id, utilisateur_id, quantite, date_ajout) VALUES
 (3,2,5,'2024-01-25'),
