@@ -65,12 +65,10 @@ CREATE TABLE commande(
     date_achat DATE,
     etat_id INT,
     utilisateur_id INT,
-    adresse_id INT,
 
     PRIMARY KEY(id_commande),
     FOREIGN KEY(etat_id) REFERENCES etat(id_etat),
-    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur),
-    FOREIGN KEY(adresse_id) REFERENCES adresse_facturation(id_adresse)
+    FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
 );
 
 CREATE TABLE variante(
@@ -204,3 +202,6 @@ INSERT INTO ligne_panier (variante_id, utilisateur_id, quantite, date_ajout) VAL
 (3,2,5,'2024-01-25'),
 (6,2,9,'2024-01-25'),
 (8,3,1,'2024-01-26');
+
+
+SELECT * FROM ligne_commande;

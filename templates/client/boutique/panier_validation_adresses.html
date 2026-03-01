@@ -20,7 +20,7 @@
                                  selected
                              {% endif %}
 
-                             >{{ adresse.nom }} ({{ adresse.code_postal }})
+                             >{{ adresse.nom_adresse }} ({{ adresse.code_postal }})
                                  {{ adresse.ville }} - {{ adresse.rue }}
                              {% if id_adresse_fav != 0 and id_adresse_fav == adresse.id_adresse %}
                                  (f)
@@ -46,7 +46,7 @@
                              </option>
                         {% endfor %}
                     </select>
-                {%  else %}
+                {% else %}
                     Il faut une adresse de livraison et de facturation pour valider la commande (livrable 2)
                     <a href="/client/coordonnee/show"  class="btn btn-primary">Ajouter une adresse (livrable 2)</a>
                 {% endif %}

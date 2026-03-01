@@ -151,13 +151,6 @@ CREATE TABLE commande(
 );
           '''
     mycursor.execute(sql)
-    sql = '''
-INSERT INTO commande (date_achat, etat_id) VALUES
-('2024-01-10', 2),
-('2024-01-15', 3),
-('2024-01-20', 1);
-          '''
-    mycursor.execute(sql)
 
     sql = '''
 CREATE TABLE variante(
@@ -243,14 +236,6 @@ CREATE TABLE ligne_commande(
 );
          '''
     mycursor.execute(sql)
-    sql = '''
-INSERT INTO ligne_commande (variante_id, commande_id, prix_commande, quantite) VALUES
-(1,1,5.00,2),
-(4,1,20.00,1),
-(7,2,30.00,1),
-(11,3,50.00,1);
-          '''
-    mycursor.execute(sql)
 
 
     sql = ''' 
@@ -265,14 +250,6 @@ CREATE TABLE ligne_panier(
     FOREIGN KEY(utilisateur_id) REFERENCES utilisateur(id_utilisateur)
 );
          '''
-    mycursor.execute(sql)
-
-    sql = '''
-INSERT INTO ligne_panier (variante_id, utilisateur_id, quantite, date_ajout) VALUES
-(3,2,5,'2024-01-25'),
-(6,2,9,'2024-01-25'),
-(8,3,1,'2024-01-26');
-          '''
     mycursor.execute(sql)
 
 
