@@ -203,6 +203,13 @@ def valid_edit_article():
     image = request.files.get('image', '')
     type_article_id = request.form.get('type_article_id', '')
 
+    if poids_moyen == '':
+        poids_moyen = None
+    if taille == '':
+        taille = None
+    if longueur_vie == '':
+        longueur_vie = None
+
     mycursor = get_db().cursor()
 
     sql = ''' SELECT image FROM espece_animal WHERE id_espece_animal = %s; '''

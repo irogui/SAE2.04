@@ -50,17 +50,20 @@ def admin_commande_show():
 
     if id_commande != None:
         sql = ''' SELECT nom_espece AS nom,
-                        ligne_commande.prix_commande AS prix,
-                        quantite,
-                        ligne_commande.prix_commande * quantite AS prix_ligne,
-                        commande.etat_id,
-                        commande.id_commande
-                    FROM ligne_commande
-                    JOIN commande ON commande.id_commande = ligne_commande.commande_id
-                    JOIN variante ON variante.id_variante = ligne_commande.variante_id
-                    JOIN espece_animal ON espece_animal.id_espece_animal = variante.espece_animal_id
-                    WHERE ligne_commande.commande_id = %s;
-                         '''
+                                    SUM(quantite) AS quantite,
+                                    prix,
+                                    SUM(quantite * prix_commande) AS prix_ligne,
+                                    COUNT(DISTINCT id_variante) AS nb_declinaisons,
+                                    GROUP_CONCAT(DISTINCT nom_couleur) AS libelle_couleur
+
+                                FROM ligne_commande
+                                JOIN variante ON id_variante = variante_id
+                                JOIN espece_animal ON id_espece_animal = espece_animal_id
+                                JOIN couleur ON id_couleur = couleur_id
+
+                                WHERE commande_id = %s
+
+                                GROUP BY id_espece_animal, prix_commande; '''
         mycursor.execute(sql, id_commande)
         articles_commande = mycursor.fetchall()
 

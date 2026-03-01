@@ -117,20 +117,28 @@ def client_commande_show():
 
     id_commande = request.args.get('id_commande', None)
 
+    articles_commande = []
+
     if id_commande is not None:
-        sql = ''' SELECT nom_espece AS nom, quantite, prix, SUM(quantite*prix) AS prix_ligne
-        
-                          FROM commande
-                          JOIN utilisateur ON utilisateur.id_utilisateur = commande.utilisateur_id
-                          JOIN ligne_commande ON ligne_commande.commande_id = commande.id_commande
-                          JOIN variante ON variante.id_variante = ligne_commande.variante_id
-                          JOIN espece_animal ON espece_animal.id_espece_animal = variante.espece_animal_id
-                          
-                          WHERE commande.id_commande = %s
-                          GROUP BY nom, quantite, prix; '''
+        sql = ''' SELECT nom_espece AS nom,
+                            SUM(quantite) AS quantite,
+                            prix,
+                            SUM(quantite * prix_commande) AS prix_ligne,
+                            COUNT(DISTINCT id_variante) AS nb_declinaisons,
+                            GROUP_CONCAT(DISTINCT nom_couleur) AS libelle_couleur
+                        
+                        FROM ligne_commande
+                        JOIN variante ON id_variante = variante_id
+                        JOIN espece_animal ON id_espece_animal = espece_animal_id
+                        JOIN couleur ON id_couleur = couleur_id
+                        
+                        WHERE commande_id = %s
+                        
+                        GROUP BY id_espece_animal, prix_commande; '''
 
         mycursor.execute(sql, (id_commande,))
         articles_commande = mycursor.fetchall()
+        print(articles_commande)
 
     commande_adresses = None
     id_commande = request.args.get('id_commande', None)
