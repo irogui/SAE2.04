@@ -13,7 +13,15 @@ client_coordonnee = Blueprint('client_coordonnee', __name__,
 def client_coordonnee_show():
     mycursor = get_db().cursor()
     id_client = session['id_user']
-    utilisateur=[]
+    print(id_client)
+
+    sql = '''SELECT login, nom_utilisateur AS nom, email
+             FROM utilisateur
+             WHERE id_utilisateur=%s'''
+
+    mycursor.execute(sql, (id_client,))
+    utilisateur=mycursor.fetchone()
+
     return render_template('client/coordonnee/show_coordonnee.html'
                            , utilisateur=utilisateur
                          #  , adresses=adresses
@@ -25,8 +33,15 @@ def client_coordonnee_edit():
     mycursor = get_db().cursor()
     id_client = session['id_user']
 
+    sql ='''SELECT id_utilisateur, login, nom_utilisateur AS nom, email
+            FROM utilisateur
+            WHERE id_utilisateur=%s'''
+
+    mycursor.execute(sql, (id_client,))
+    utilisateur = mycursor.fetchone()
+
     return render_template('client/coordonnee/edit_coordonnee.html'
-                           #,utilisateur=utilisateur
+                           ,utilisateur=utilisateur
                            )
 
 @client_coordonnee.route('/client/coordonnee/edit', methods=['POST'])

@@ -18,8 +18,12 @@ def client_commande_valide():
 
     sql = ''' SELECT variante_id AS id_declinaison_article,
                      quantite,
-                     date_ajout
+                     date_ajout,
+                     nom_espece AS nom,
+                     prix 
                      FROM ligne_panier
+                     JOIN variante AS var ON var.id_variante = ligne_panier.variante_id
+                     JOIN espece_animal AS espece ON espece.id_espece_animal = var.espece_animal_id 
                      WHERE utilisateur_id = %s; '''
     mycursor.execute(sql, (id_client,))
     articles_panier = mycursor.fetchall()
@@ -34,6 +38,7 @@ def client_commande_valide():
     else:
         prix_total = articles_panier[0]['prix_total'] * articles_panier[0]['quantite']
     # etape 2 : selection des adresses
+
     return render_template('client/boutique/panier_validation_adresses.html'
                            #, adresses=adresses
                            , articles_panier=articles_panier
