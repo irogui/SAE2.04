@@ -16,6 +16,7 @@ def client_panier_add():
     id_client = session['id_user']
     id_article = request.form.get('id_article')
     quantite = int(request.form.get('quantite'))
+
     id_declinaison_article = request.form.get('id_declinaison_article')
 
 
@@ -31,31 +32,39 @@ def client_panier_add():
         mycursor.execute(sql, (id_client, id_declinaison_article))
         ligne = mycursor.fetchone()
 
-        if ligne:
-            sql = '''
-            UPDATE ligne_panier
-            SET quantite = quantite + %s
-            WHERE utilisateur_id = %s AND variante_id = %s
-            '''
-            mycursor.execute(sql, (quantite, id_client, id_declinaison_article))
+        sql = ''' SELECT * FROM variante WHERE id_variante = %s; '''
+        mycursor.execute(sql, (id_declinaison_article,))
+        stock = mycursor.fetchone()['stock']
+
+        if stock - quantite >= 0:
+            if ligne:
+                sql = '''
+                UPDATE ligne_panier
+                SET quantite = quantite + %s
+                WHERE utilisateur_id = %s AND variante_id = %s
+                '''
+                mycursor.execute(sql, (quantite, id_client, id_declinaison_article))
+
+            else:
+                sql = '''
+                        INSERT INTO ligne_panier (utilisateur_id, variante_id, quantite, date_ajout)
+                        VALUES (%s, %s, %s, CURDATE())
+                        '''
+                mycursor.execute(sql, (id_client, id_declinaison_article, quantite))
+
+            sql = ''' UPDATE variante SET stock = stock - %s WHERE id_variante=%s; '''
+            mycursor.execute(sql, (quantite, id_declinaison_article,))
+
+            get_db().commit()
+            return redirect('/client/article/show')
 
         else:
-            sql = '''
-                    INSERT INTO ligne_panier (utilisateur_id, variante_id, quantite, date_ajout)
-                    VALUES (%s, %s, %s, CURDATE())
-                    '''
-            mycursor.execute(sql, (id_client, id_declinaison_article, quantite))
-
-        sql = ''' UPDATE variante SET stock = stock - %s WHERE id_variante=%s; '''
-        mycursor.execute(sql, (quantite, id_declinaison_article,))
-
-        get_db().commit()
-        return redirect('/client/article/show')
+            flash("Il n'y a plus assez d'articles pour traiter votre demande !")
+            return redirect('/client/article/show')
 
 
     # CAS 2 : Utilisation de bouton ajouter
     else:
-
         sql = '''
         SELECT id_variante AS id_declinaison_article,
                stock,
@@ -85,22 +94,35 @@ def client_panier_add():
             mycursor.execute(sql, (id_client, id_declinaison_article))
             ligne = mycursor.fetchone()
 
-            if ligne:
-                sql = '''
-                UPDATE ligne_panier
-                SET quantite = quantite + %s
-                WHERE utilisateur_id = %s AND variante_id = %s
-                '''
-                mycursor.execute(sql, (quantite, id_client, id_declinaison_article))
-            else:
-                sql = '''
-                INSERT INTO ligne_panier (utilisateur_id, variante_id, quantite, date_ajout)
-                VALUES (%s, %s, %s, CURDATE())
-                '''
-                mycursor.execute(sql, (id_client, id_declinaison_article, quantite))
+            sql = ''' SELECT * FROM variante WHERE id_variante = %s; '''
+            mycursor.execute(sql, (id_declinaison_article,))
+            stock = mycursor.fetchone()['stock']
 
-            get_db().commit()
-            return redirect('/client/article/show')
+            if stock - quantite >= 0:
+
+                if ligne:
+                    sql = '''
+                    UPDATE ligne_panier
+                    SET quantite = quantite + %s
+                    WHERE utilisateur_id = %s AND variante_id = %s
+                    '''
+                    mycursor.execute(sql, (quantite, id_client, id_declinaison_article))
+                else:
+                    sql = '''
+                    INSERT INTO ligne_panier (utilisateur_id, variante_id, quantite, date_ajout)
+                    VALUES (%s, %s, %s, CURDATE())
+                    '''
+                    mycursor.execute(sql, (id_client, id_declinaison_article, quantite))
+
+                sql = ''' UPDATE variante SET stock = stock - %s WHERE id_variante=%s; '''
+                mycursor.execute(sql, (quantite, id_declinaison_article,))
+
+                get_db().commit()
+                return redirect('/client/article/show')
+
+            else:
+                flash("Il n'y a plus assez d'articles pour traiter votre demande !")
+                return redirect('/client/article/show')
 
         # Plusieurs déclinaisons donc affichage vue choix
         else:

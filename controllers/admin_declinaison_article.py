@@ -115,11 +115,12 @@ def valid_edit_declinaison_article():
     mycursor = get_db().cursor()
 
     sql = ''' UPDATE variante SET stock=%s, couleur_id=%s WHERE id_variante=%s; '''
-    mycursor.execute(sql, (stock, couleur_id, id_article))
+    mycursor.execute(sql, (stock, couleur_id, id_declinaison_article))
     get_db().commit()
 
     message = u'declinaison_article modifié , id:' + str(id_declinaison_article) + '- stock :' + str(stock) + ' - taille_id:' + str(taille_id) + ' - couleur_id:' + str(couleur_id)
     flash(message, 'alert-success')
+
     return redirect('/admin/article/edit?id_article=' + str(id_article))
 
 

@@ -39,7 +39,7 @@ def admin_commande_show():
                         commande.etat_id,
                         etat.libelle_etat
                 
-                ORDER BY commande.date_achat DESC;'''
+                ORDER BY etat_id, commande.date_achat DESC;'''
     mycursor.execute(sql)
     commandes = mycursor.fetchall()
 
