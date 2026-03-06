@@ -128,15 +128,16 @@ def client_commande_show():
                             GROUP_CONCAT(DISTINCT nom_couleur) AS libelle_couleur
                         
                         FROM ligne_commande
+                        JOIN commande ON commande.id_commande = ligne_commande.commande_id
                         JOIN variante ON id_variante = variante_id
                         JOIN espece_animal ON id_espece_animal = espece_animal_id
                         JOIN couleur ON id_couleur = couleur_id
                         
-                        WHERE commande_id = %s
+                        WHERE commande_id = %s AND utilisateur_id = %s
                         
                         GROUP BY id_espece_animal, prix_commande; '''
 
-        mycursor.execute(sql, (id_commande,))
+        mycursor.execute(sql, (id_commande, session['id_user']))
         articles_commande = mycursor.fetchall()
 
     commande_adresses = None
