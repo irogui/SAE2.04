@@ -14,14 +14,15 @@ client_commentaire = Blueprint('client_commentaire', __name__,
 @client_commentaire.route('/client/article/details', methods=['GET'])
 def client_article_details():
     mycursor = get_db().cursor()
+
     id_article =  request.args.get('id_article', None)
     id_client = session['id_user']
 
-    ## partie 4
+
+    ## partie 4 (Etudiant 4)
     # client_historique_add(id_article, id_client)
 
-    sql = '''
-    '''
+    sql = ''' SELECT  '''
     #mycursor.execute(sql, id_article)
     #article = mycursor.fetchone()
     article=[]
